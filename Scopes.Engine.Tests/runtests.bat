@@ -1,1 +1,0 @@
-..\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe bin\Debug\Scopes.Engine.Tests.dll /noshadow

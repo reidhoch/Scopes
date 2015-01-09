@@ -100,8 +100,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>cd $(ProjectDir)
-$(ProjectDir)codecoverage.bat</PostBuildEvent>
+    <PostBuildEvent>$(SolutionDir)packages\OpenCover.4.5.3522\OpenCover.Console.exe -target:$(SolutionDir)packages\NUnit.Runners.2.6.4\tools\nunit-console.exe -targetargs:"/nologo /noshadow $(TargetPath)" -register:user "-filter:+[Scopes.Engine]* -[*Tests]*" -skipautoprops
+$(SolutionDir)packages\ReportGenerator.2.0.4.0\reportgenerator.exe -reports:results.xml -targetdir:$(ProjectDir)coverage</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
