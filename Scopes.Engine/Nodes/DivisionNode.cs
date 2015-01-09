@@ -27,7 +27,7 @@
         {
             var num = Left.Evaluate();
             var den = Right.Evaluate();
-            if (den == 0.0)
+            if (Math.Abs(den) < Double.Epsilon)
             {
                 return Double.NaN;
             }
