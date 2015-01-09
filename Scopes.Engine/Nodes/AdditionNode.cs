@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class AdditionNode : IGepNode
+    public class AdditionNode : IFunctionNode
     {
         public AdditionNode(IGepNode left, IGepNode right)
         {

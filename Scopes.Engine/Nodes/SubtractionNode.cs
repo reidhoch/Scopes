@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class SubtractionNode: IGepNode
+    public class SubtractionNode : IFunctionNode
     {
         public SubtractionNode(IGepNode left, IGepNode right)
         {

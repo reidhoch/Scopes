@@ -84,7 +84,9 @@
     <Compile Include="Nodes\AdditionNode.cs" />
     <Compile Include="Nodes\ConstantNode.cs" />
     <Compile Include="Nodes\DivisionNode.cs" />
+    <Compile Include="Nodes\IFunctionNode.cs" />
     <Compile Include="Nodes\IGepNode.cs" />
+    <Compile Include="Nodes\ITerminalNode.cs" />
     <Compile Include="Nodes\MultiplicationNode.cs" />
     <Compile Include="Nodes\SquareRootNode.cs" />
     <Compile Include="Nodes\SubtractionNode.cs" />

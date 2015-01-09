@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class DivisionNode : IGepNode
+    public class DivisionNode : IFunctionNode
     {
         public DivisionNode(IGepNode left, IGepNode right)
         {

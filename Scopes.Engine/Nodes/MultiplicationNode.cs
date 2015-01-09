@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class MultiplicationNode
+    public class MultiplicationNode : IFunctionNode
     {
         public MultiplicationNode(IGepNode left, IGepNode right)
         {

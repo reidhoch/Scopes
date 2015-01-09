@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class SquareRootNode : IGepNode
+    public class SquareRootNode : IFunctionNode
     {
         public SquareRootNode(IGepNode child)
         {

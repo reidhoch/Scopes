@@ -1,6 +1,6 @@
 ﻿namespace Scopes.Engine.Nodes
 {
-    public class ConstantNode : IGepNode
+    public class ConstantNode : ITerminalNode
     {
         private readonly double constant;
 
