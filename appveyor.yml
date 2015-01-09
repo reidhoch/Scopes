@@ -6,7 +6,7 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 build:
-  verbosity: minimal
+  verbosity: normal
 artifacts:
 - path: Scopes.Engine.Tests\coverage
   name: Coverage
