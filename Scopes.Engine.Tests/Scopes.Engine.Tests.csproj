@@ -56,6 +56,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Nodes\AdditionNodeTests.cs" />
+    <Compile Include="Nodes\ConstantNodeTests.cs" />
+    <Compile Include="Nodes\DivisionNodeTests.cs" />
+    <Compile Include="Nodes\MultiplicationNodeTests.cs" />
+    <Compile Include="Nodes\SquareRootNodeTests.cs" />
+    <Compile Include="Nodes\SubtractionNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

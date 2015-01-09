@@ -1,0 +1,2 @@
+..\packages\OpenCover.4.5.3522\OpenCover.Console.exe -target:runtests.bat -register:user "-filter:+[Scopes.Engine]* -[*Tests]*"-skipautoprops
+..\packages\ReportGenerator.2.0.4.0\reportgenerator.exe -reports:results.xml -targetdir:coverage

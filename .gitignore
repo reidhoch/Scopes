@@ -181,3 +181,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Coverage results
+/Scopes.Engine.Tests/coverage
+/Scopes.Engine.Tests/results.xml
