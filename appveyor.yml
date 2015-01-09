@@ -6,9 +6,7 @@ assembly_info:
   assembly_file_version: '{version}'
   assembly_informational_version: '{version}'
 before_build:
-- nuget restore Scopes.sln
-- nuget restore Scopes.Engine\Scopes.Engine.csproj
-- nuget restore Scopes.Engine.Tests\Scopes.Engine.Tests.csproj
+- nuget restore
 build:
   verbosity: normal
 artifacts:
