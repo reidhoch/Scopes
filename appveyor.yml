@@ -8,6 +8,7 @@ assembly_info:
 before_build:
 - nuget restore
 build:
+  project: Scopes.sln
   verbosity: normal
 artifacts:
 - path: Scopes.Engine.Tests\coverage
