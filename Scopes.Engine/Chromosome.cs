@@ -1,64 +1,106 @@
 ﻿namespace Scopes.Engine
 {
-    using Scopes.Engine.Nodes;
     using System;
     using System.Collections.Generic;
-    using System.Text;
+    using System.Linq;
+
+    using MathNet.Numerics.Random;
+
+    using Scopes.Engine.Nodes;
 
     public class Chromosome
     {
         // Not entirely sure what I want to do right here.
-        private static readonly Dictionary<char, Func<IFunctionNode>> FunctionSet = new Dictionary<char, Func<IFunctionNode>>
+        private static readonly ISet<Func<IFunctionNode>> FunctionSet = new HashSet<Func<IFunctionNode>>
         { 
-            { 'Q', () => new SquareRootNode() },
-            { '+', () => new AdditionNode() },
-            { '-', () => new SubtractionNode() },
-            { '*', () => new MultiplicationNode() },
-            { '/', () => new DivisionNode() }
+            () => new SquareRootNode(),
+            () => new AdditionNode(),
+            () => new SubtractionNode(),
+            () => new MultiplicationNode(),
+            () => new DivisionNode() 
         };
 
+        private readonly MersenneTwister random = MersenneTwister.Default;
+        private readonly IList<IGepNode> nodes;
         private readonly int headLength;
-        private readonly int tailLength;
+////        private readonly int tailLength;
         private readonly int length;
-        private readonly int numGenes;
-        private readonly IGepNode[] genes;
-        private readonly String karva;
+////        private readonly int numGenes;
+////        private readonly IGepNode[] genes;
 
         public Chromosome(int headLength, int numGenes)
         {
             if (headLength < 0) { throw new ArgumentOutOfRangeException("headLength", headLength, "Must be non-negative."); }
             if (numGenes < 1) { throw new ArgumentOutOfRangeException("numGenes", numGenes, "Must be greater than or equal to 1."); }
 
-            this.numGenes = numGenes;
-            this.genes = new IGepNode[this.numGenes];
+////            this.numGenes = numGenes;
+////            this.genes = new IGepNode[this.numGenes];
             this.headLength = headLength;
             // Learn maxArity from available nodes.
             const int MaxArity = 2;
-            this.tailLength = (this.headLength * (MaxArity - 1)) + 1;
-            this.length = this.headLength + this.tailLength;
-            this.karva = Generate();
+            var tailLength = (this.headLength * (MaxArity - 1)) + 1;
+            this.length = this.headLength + tailLength;
+            this.nodes = new List<IGepNode>(this.length);
+            this.Generate();
+            this.GetTree();
         }
 
-        private string Generate()
+        public void Generate()
         {
-            StringBuilder buffer = new StringBuilder(this.length);
-            buffer.Append(GenerateRoot()); // Give the root a large chance of being a non-terminal node.
-            for (int i = 1; i < this.headLength; i++)
-            {
+            var setLength = FunctionSet.Count;
+            this.nodes.Add(GenerateRoot()); // Give the root a large chance of being a non-terminal node.
+            for (var i = 1; i < this.headLength; i++) {
                 // Functions and terminals.
+                var isFunction = random.NextDouble() < 0.5d;
+                if (isFunction) {
+                    this.nodes.Add(FunctionSet.ElementAt(random.Next(0, setLength - 1))());
+                } else {
+                    this.nodes.Add(new ConstantNode());
+                }
             }
-            for (int i = this.headLength; i < this.length; i++)
-            {
+            for (var i = this.headLength; i < this.length; i++) {
                 // Terminals only.
+                this.nodes.Add(new ConstantNode());
             }
-            return buffer.ToString();
         }
 
-        private char GenerateRoot()
+        public IGepNode GetTree()
         {
-            throw new NotImplementedException();
+            var functions = new Queue<IFunctionNode>();
+            var root = this.nodes[0];
+            if (0 == root.Arity) {
+                return root;
+            }
+
+            functions.Enqueue(root as IFunctionNode);
+            for (var idx = 1; idx < this.length; idx++) {
+                var node = this.nodes[idx];
+                if (0 != node.Arity) {
+                    functions.Enqueue(node as IFunctionNode);
+                }
+                var parent = functions.Peek();
+                parent.Children.Add(node);
+                if (parent.Children.Count != parent.Arity) {
+                    continue;
+                }
+                functions.Dequeue();
+                if (functions.Count == 0) {
+                    break;
+                }
+            }
+
+            return root;
         }
 
-        public string Karva { get { return this.karva; } }
+        private IGepNode GenerateRoot()
+        {
+            var setLength = FunctionSet.Count;
+            var isFunction = random.NextDouble() < 0.9d;
+            if (isFunction) {
+                return FunctionSet.ElementAt(random.Next(0, setLength - 1))();
+            }
+            // Return a terminal node.
+            return new ConstantNode();
+        }
     }
 }

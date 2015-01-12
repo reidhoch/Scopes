@@ -12,26 +12,17 @@
         [Test]
         public void GetArity([Random(5)]double child)
         {
-            var node = new SquareRootNode { Child = new ConstantNode(child) };
+            var node = new SquareRootNode { Children = { new ConstantNode { Value = child } } };
 
             Assert.That(node.Arity, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void GetChild()
-        {
-            var child = new ConstantNode(25.0);
-            var node = new SquareRootNode { Child = child };
-
-            Assert.That(node.Child, Is.EqualTo(child));
         }
 
         [Test]
         public void Evaluate([Values(1.0, 4.0, 9.0,16.0,25.0)]double childVal)
         {
             var expected = Math.Sqrt(childVal);
-            var child = new ConstantNode(childVal);
-            var node = new SquareRootNode { Child = child };
+            var child = new ConstantNode { Value = childVal };
+            var node = new SquareRootNode { Children = { child } };
 
             Assert.That(node.Evaluate(), Is.EqualTo(expected));
         }
