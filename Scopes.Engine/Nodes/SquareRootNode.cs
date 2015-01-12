@@ -4,12 +4,6 @@
 
     public class SquareRootNode : IFunctionNode
     {
-        public SquareRootNode(IGepNode child)
-        {
-            if (null == child) { throw new ArgumentNullException("child"); }
-            this.Child = child;
-        }
-
         public int Arity
         {
             get
@@ -18,7 +12,7 @@
             }
         }
 
-        public IGepNode Child { get; private set; }
+        public IGepNode Child { get; set; }
 
         public double Evaluate()
         {

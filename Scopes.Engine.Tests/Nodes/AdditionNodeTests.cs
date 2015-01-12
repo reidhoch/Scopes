@@ -7,31 +7,12 @@
     using Scopes.Engine.Nodes;
 
     [TestFixture]
-    // ReSharper disable ObjectCreationAsStatement
     public class AdditionNodeTests
     {
         [Test]
-        public void Constructor()
+        public void GetArity([Random(5)]double left, [Random(5)]double right)
         {
-            Assert.DoesNotThrow(() => new AdditionNode(new ConstantNode(5.0), new ConstantNode(5.0)));
-        }
-
-        [Test, ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructorNullLeft()
-        {
-            new AdditionNode(null, new ConstantNode(5.0));
-        }
-
-        [Test, ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructorNullRight()
-        {
-            new AdditionNode(new ConstantNode(5.0), null);
-        }
-
-        [Test]
-        public void GetArity()
-        {
-            var node = new AdditionNode(new ConstantNode(5.0), new ConstantNode(5.0));
+            var node = new AdditionNode { Left = new ConstantNode(left), Right = new ConstantNode(right) };
 
             Assert.That(node.Arity, Is.EqualTo(2));
         }
@@ -41,7 +22,7 @@
         {
             var left = new ConstantNode(2.5);
             var right = new ConstantNode(3.5);
-            var node = new AdditionNode(left, right);
+            var node = new AdditionNode { Left = left, Right = right };
 
             Assert.That(node.Left, Is.EqualTo(left));
             Assert.That(node.Right, Is.EqualTo(right));
@@ -53,7 +34,7 @@
             var expected = leftVal + rightVal;
             var left = new ConstantNode(leftVal);
             var right = new ConstantNode(rightVal);
-            var node = new AdditionNode(left, right);
+            var node = new AdditionNode { Left = left, Right = right };
 
             Assert.That(node.Evaluate(), Is.EqualTo(expected));
         }

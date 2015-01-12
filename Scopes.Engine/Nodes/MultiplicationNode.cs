@@ -4,14 +4,6 @@
 
     public class MultiplicationNode : IFunctionNode
     {
-        public MultiplicationNode(IGepNode left, IGepNode right)
-        {
-            if (null == left) { throw new ArgumentNullException("left"); }
-            if (null == right) { throw new ArgumentNullException("right"); }
-            this.Left = left;
-            this.Right = right;
-        }
-
         public int Arity
         {
             get
@@ -20,8 +12,8 @@
             }
         }
 
-        public IGepNode Right { get; private set; }
-        public IGepNode Left { get; private set; }
+        public IGepNode Right { get; set; }
+        public IGepNode Left { get; set; }
 
         public double Evaluate()
         {
