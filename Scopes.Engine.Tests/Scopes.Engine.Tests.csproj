@@ -62,6 +62,8 @@
     <Compile Include="Nodes\MultiplicationNodeTests.cs" />
     <Compile Include="Nodes\SquareRootNodeTests.cs" />
     <Compile Include="Nodes\SubtractionNodeTests.cs" />
+    <Compile Include="Nodes\VariableNodeTests.cs" />
+    <Compile Include="PopulationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

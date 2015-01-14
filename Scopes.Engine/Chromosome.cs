@@ -37,8 +37,8 @@
 ////            this.genes = new IGepNode[this.numGenes];
             this.headLength = headLength;
             // Learn maxArity from available nodes.
-            const int MaxArity = 2;
-            var tailLength = (this.headLength * (MaxArity - 1)) + 1;
+            var maxArity = FunctionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
+            var tailLength = (this.headLength * (maxArity - 1)) + 1;
             this.length = this.headLength + tailLength;
             this.nodes = new List<IGepNode>(this.length);
             this.Generate();
@@ -67,14 +67,14 @@
         public IGepNode GetTree()
         {
             var functions = new Queue<IFunctionNode>();
-            var root = this.nodes[0];
+            var root = nodes[0];
             if (0 == root.Arity) {
                 return root;
             }
 
             functions.Enqueue(root as IFunctionNode);
             for (var idx = 1; idx < this.length; idx++) {
-                var node = this.nodes[idx];
+                var node = nodes[idx];
                 if (0 != node.Arity) {
                     functions.Enqueue(node as IFunctionNode);
                 }

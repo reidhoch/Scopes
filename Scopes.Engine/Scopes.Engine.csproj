@@ -90,6 +90,9 @@
     <Compile Include="Nodes\MultiplicationNode.cs" />
     <Compile Include="Nodes\SquareRootNode.cs" />
     <Compile Include="Nodes\SubtractionNode.cs" />
+    <Compile Include="Nodes\VariableNode.cs" />
+    <Compile Include="IPopulation.cs" />
+    <Compile Include="Population.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
