@@ -7,6 +7,7 @@
     using MathNet.Numerics.Random;
 
     using Scopes.Engine.Nodes;
+    using System.Diagnostics.Contracts;
 
     public class Chromosome
     {
@@ -30,8 +31,8 @@
 
         public Chromosome(int headLength, int numGenes)
         {
-            if (headLength < 0) { throw new ArgumentOutOfRangeException("headLength", headLength, "Must be non-negative."); }
-            if (numGenes < 1) { throw new ArgumentOutOfRangeException("numGenes", numGenes, "Must be greater than or equal to 1."); }
+            Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
+            Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
 
 ////            this.numGenes = numGenes;
 ////            this.genes = new IGepNode[this.numGenes];
@@ -42,8 +43,9 @@
             this.length = this.headLength + tailLength;
             this.nodes = new List<IGepNode>(this.length);
             this.Generate();
-            this.GetTree();
         }
+
+        public double Fitness { get; private set; }
 
         public void Generate()
         {
@@ -64,32 +66,40 @@
             }
         }
 
-        public IGepNode GetTree()
+        public IGepNode Tree
         {
-            var functions = new Queue<IFunctionNode>();
-            var root = nodes[0];
-            if (0 == root.Arity) {
+            get
+            {
+                var functions = new Queue<IFunctionNode>();
+                var root = nodes[0];
+                if (0 == root.Arity)
+                {
+                    return root;
+                }
+
+                functions.Enqueue(root as IFunctionNode);
+                for (var idx = 1; idx < this.length; idx++)
+                {
+                    var node = nodes[idx];
+                    if (0 != node.Arity)
+                    {
+                        functions.Enqueue(node as IFunctionNode);
+                    }
+                    var parent = functions.Peek();
+                    parent.Children.Add(node);
+                    if (parent.Children.Count != parent.Arity)
+                    {
+                        continue;
+                    }
+                    functions.Dequeue();
+                    if (functions.Count == 0)
+                    {
+                        break;
+                    }
+                }
+
                 return root;
             }
-
-            functions.Enqueue(root as IFunctionNode);
-            for (var idx = 1; idx < this.length; idx++) {
-                var node = nodes[idx];
-                if (0 != node.Arity) {
-                    functions.Enqueue(node as IFunctionNode);
-                }
-                var parent = functions.Peek();
-                parent.Children.Add(node);
-                if (parent.Children.Count != parent.Arity) {
-                    continue;
-                }
-                functions.Dequeue();
-                if (functions.Count == 0) {
-                    break;
-                }
-            }
-
-            return root;
         }
 
         private IGepNode GenerateRoot()

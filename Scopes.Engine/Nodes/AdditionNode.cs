@@ -2,16 +2,25 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.Contracts;
 
     [DebuggerDisplay("+")]
     public class AdditionNode : IFunctionNode
     {
+        private readonly IList<IGepNode> children;
         public AdditionNode()
         {
-            this.Children = new List<IGepNode>(this.Arity);
+            this.children = new List<IGepNode>(this.Arity);
         }
 
-        public IList<IGepNode> Children { get; private set; }
+        public IList<IGepNode> Children
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IList<IGepNode>>() != null);
+                return this.children;
+            }
+        }
 
         public int Arity
         {
