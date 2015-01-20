@@ -1,8 +1,12 @@
 ﻿namespace Scopes.Engine.Tests
 {
     using System;
+    using System.Collections.Generic;
 
     using NUnit.Framework;
+
+    using Scopes.Engine.Factories;
+    using Scopes.Engine.Nodes;
 
     [TestFixture]
     // ReSharper disable ObjectCreationAsStatement

@@ -1,9 +1,10 @@
 ﻿namespace Scopes.Engine.Factories
 {
-    using Scopes.Engine.Nodes;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
+
+    using Scopes.Engine.Nodes;
 
     public class ChromosomeFactory
     {
@@ -22,7 +23,7 @@
 
             var chromosomes = new List<Chromosome>(size);
             for (var idx = 0; idx < size; idx++) {
-                chromosomes[idx] = new Chromosome(headLength, numGenes);
+                chromosomes.Add(new Chromosome(headLength, numGenes));
             }
             return new Population(chromosomes);
         }

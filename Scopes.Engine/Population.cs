@@ -73,7 +73,7 @@
             var list = this.chromosomes.OrderBy(val => val.Fitness).ToList();
             var boundary = (Int32)Math.Ceiling((1.0d - this.ElitismRate) * this.chromosomes.Count);
             for (var idx = boundary; idx < this.chromosomes.Count; idx++) {
-                nextGeneration.Add(this.chromosomes[idx]);
+                nextGeneration.Add(list[idx]);
             }
 
             return nextGeneration;
