@@ -47,8 +47,21 @@
         [Test]
         public void Add()
         {
+            var functionSet = new HashSet<Func<IFunctionNode>>
+                                  {
+                                      () => new SquareRootNode(),
+                                      () => new AdditionNode(),
+                                      () => new SubtractionNode(),
+                                      () => new MultiplicationNode(),
+                                      () => new DivisionNode()
+                                  };
+            var terminalSet = new HashSet<Func<ITerminalNode>>
+                                  {
+                                      () => new ConstantNode(),
+                                      () => new VariableNode()
+                                  };
             var pop = new Population { Limit = Int16.MaxValue };
-            pop.Add(new Chromosome(10, 1));
+            pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
 
             Assert.That(pop.Size, Is.EqualTo(1));
         }
@@ -56,9 +69,22 @@
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void AddTooMany()
         {
+            var functionSet = new HashSet<Func<IFunctionNode>>
+                                  {
+                                      () => new SquareRootNode(),
+                                      () => new AdditionNode(),
+                                      () => new SubtractionNode(),
+                                      () => new MultiplicationNode(),
+                                      () => new DivisionNode()
+                                  };
+            var terminalSet = new HashSet<Func<ITerminalNode>>
+                                  {
+                                      () => new ConstantNode(),
+                                      () => new VariableNode()
+                                  };
             var pop = new Population { Limit = 1 };
-            pop.Add(new Chromosome(10, 1));
-            pop.Add(new Chromosome(10, 1));
+            pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
+            pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
         }
     }
 }

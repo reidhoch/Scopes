@@ -11,41 +11,53 @@
 
     public class Chromosome
     {
-        // Not entirely sure what I want to do right here.
-        private static readonly ISet<Func<IFunctionNode>> FunctionSet = new HashSet<Func<IFunctionNode>>
-        { 
-            () => new SquareRootNode(),
-            () => new AdditionNode(),
-            () => new SubtractionNode(),
-            () => new MultiplicationNode(),
-            () => new DivisionNode() 
-        };
-
         private readonly MersenneTwister random = MersenneTwister.Default;
         private readonly IList<IGepNode> nodes;
+        private readonly ISet<Func<IFunctionNode>> functionSet;
+        private readonly ISet<Func<ITerminalNode>> terminalSet;
         private readonly int headLength;
 ////        private readonly int tailLength;
         private readonly int length;
-////        private readonly int numGenes;
+        private readonly int numGenes;
 ////        private readonly IGepNode[] genes;
 
-        public Chromosome(int headLength, int numGenes)
+        public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet, ISet<Func<ITerminalNode>> terminalSet, IEnumerable<IGepNode> nodes) : 
+            this(headLength,numGenes,functionSet,terminalSet)
         {
             Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
             Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
+            Contract.Requires<ArgumentNullException>(functionSet != null);
+            Contract.Requires<ArgumentNullException>(terminalSet != null);
+            Contract.Requires<ArgumentNullException>(nodes != null);
+            this.nodes = new List<IGepNode>(nodes);
+        }
 
-////            this.numGenes = numGenes;
+        public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet, ISet<Func<ITerminalNode>> terminalSet)
+        {
+            Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
+            Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
+            Contract.Requires<ArgumentNullException>(functionSet != null);
+            Contract.Requires<ArgumentNullException>(terminalSet != null);
+
+            this.numGenes = numGenes;
 ////            this.genes = new IGepNode[this.numGenes];
             this.headLength = headLength;
             // Learn maxArity from available nodes.
-            var maxArity = FunctionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
+            var maxArity = functionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
             var tailLength = (this.headLength * (maxArity - 1)) + 1;
             this.length = this.headLength + tailLength;
             this.nodes = new List<IGepNode>(this.length);
+            this.functionSet = functionSet;
+            this.terminalSet = terminalSet;
             this.Generate();
         }
 
         public double Fitness { get; private set; }
+        public ISet<Func<IFunctionNode>> FunctionSet { get { return this.functionSet; } }
+        public int HeadLength { get { return this.headLength; } }
+        public IList<IGepNode> Nodes { get { return this.nodes; } }
+        public int NumGenes { get { return this.numGenes; } }
+        public ISet<Func<ITerminalNode>> TerminalSet { get { return this.terminalSet; } }
 
         public void Generate()
         {

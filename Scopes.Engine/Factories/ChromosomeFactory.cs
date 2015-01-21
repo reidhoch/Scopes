@@ -23,7 +23,7 @@
 
             var chromosomes = new List<Chromosome>(size);
             for (var idx = 0; idx < size; idx++) {
-                chromosomes.Add(new Chromosome(headLength, numGenes));
+                chromosomes.Add(new Chromosome(headLength, numGenes, functionSet, terminalSet));
             }
             return new Population(chromosomes);
         }
