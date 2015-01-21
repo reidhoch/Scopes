@@ -8,9 +8,9 @@
 
     public class ChromosomeFactory
     {
-        private static readonly Lazy<ChromosomeFactory> lazy = new Lazy<ChromosomeFactory>(() => new ChromosomeFactory());
+        private static readonly Lazy<ChromosomeFactory> Lazy = new Lazy<ChromosomeFactory>(() => new ChromosomeFactory());
 
-        public static ChromosomeFactory Instance { get { return lazy.Value; } }
+        public static ChromosomeFactory Instance { get { return Lazy.Value; } }
 
         public IPopulation Generate(ISet<Func<IFunctionNode>> functionSet, ISet<Func<ITerminalNode>> terminalSet, int size, int headLength, int numGenes)
         {

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
-    [ContractClass(typeof(IPopulationContract))]
+    [ContractClass(typeof(PopulationContract))]
     public interface IPopulation : IEnumerable<Chromosome>
     {
         int Limit { get; set; }
@@ -16,14 +16,14 @@
     }
 
     [ContractClassFor(typeof(IPopulation))]
-    internal abstract class IPopulationContract : IPopulation
+    internal abstract class PopulationContract : IPopulation
     {
 
         public int Limit
         {
             get
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
             set
             {
@@ -33,12 +33,12 @@
 
         public int Size
         {
-            get { throw new System.NotImplementedException(); }
+            get { throw new NotImplementedException(); }
         }
 
         public IPopulation NextGeneration()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Add(Chromosome chromosome)
@@ -48,12 +48,12 @@
 
         public IEnumerator<Chromosome> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

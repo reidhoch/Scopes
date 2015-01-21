@@ -11,7 +11,6 @@
     {
         private readonly List<Chromosome> chromosomes;
         private double elitismRate = 0.9;
-        private int limit;
 
         public double ElitismRate
         {
@@ -26,17 +25,8 @@
                 this.elitismRate = value;
             }
         }
-        public int Limit
-        {
-            get
-            {
-                return this.limit;
-            }
-            set
-            {
-                this.limit = value;
-            }
-        }
+
+        public int Limit { get; set; }
 
         public int Size
         {
