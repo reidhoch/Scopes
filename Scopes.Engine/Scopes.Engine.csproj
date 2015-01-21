@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="Chromosome.cs" />
     <Compile Include="Factories\ChromosomeFactory.cs" />
+    <Compile Include="Mutation\IMutation.cs" />
+    <Compile Include="Mutation\SinglePointMutation.cs" />
     <Compile Include="Nodes\AdditionNode.cs" />
     <Compile Include="Nodes\ConstantNode.cs" />
     <Compile Include="Nodes\DivisionNode.cs" />
