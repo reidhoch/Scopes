@@ -5,7 +5,6 @@
 
     using NUnit.Framework;
 
-    using Scopes.Engine.Factories;
     using Scopes.Engine.Nodes;
 
     [TestFixture]

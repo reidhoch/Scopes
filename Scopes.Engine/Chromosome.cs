@@ -21,8 +21,8 @@
         private readonly int numGenes;
 ////        private readonly IGepNode[] genes;
 
-        public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet, ISet<Func<ITerminalNode>> terminalSet, IEnumerable<IGepNode> nodes) : 
-            this(headLength,numGenes,functionSet,terminalSet)
+        public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet, ISet<Func<ITerminalNode>> terminalSet, IEnumerable<IGepNode> nodes) :
+            this(headLength, numGenes, functionSet, terminalSet)
         {
             Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
             Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
@@ -55,6 +55,7 @@
         public double Fitness { get; private set; }
         public ISet<Func<IFunctionNode>> FunctionSet { get { return this.functionSet; } }
         public int HeadLength { get { return this.headLength; } }
+        public int Length { get { return this.length; } }
         public IList<IGepNode> Nodes { get { return this.nodes; } }
         public int NumGenes { get { return this.numGenes; } }
         public ISet<Func<ITerminalNode>> TerminalSet { get { return this.terminalSet; } }
