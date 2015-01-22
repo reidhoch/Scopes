@@ -84,28 +84,23 @@
             {
                 var functions = new Queue<IFunctionNode>();
                 var root = nodes[0];
-                if (0 == root.Arity)
-                {
+                if (0 == root.Arity) {
                     return root;
                 }
 
                 functions.Enqueue(root as IFunctionNode);
-                for (var idx = 1; idx < this.length; idx++)
-                {
+                for (var idx = 1; idx < this.length; idx++) {
                     var node = nodes[idx];
-                    if (0 != node.Arity)
-                    {
+                    if (0 != node.Arity) {
                         functions.Enqueue(node as IFunctionNode);
                     }
                     var parent = functions.Peek();
                     parent.Children.Add(node);
-                    if (parent.Children.Count != parent.Arity)
-                    {
+                    if (parent.Children.Count != parent.Arity) {
                         continue;
                     }
                     functions.Dequeue();
-                    if (functions.Count == 0)
-                    {
+                    if (functions.Count == 0) {
                         break;
                     }
                 }

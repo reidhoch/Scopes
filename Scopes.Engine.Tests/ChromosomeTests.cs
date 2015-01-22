@@ -11,10 +11,7 @@
     // ReSharper disable ObjectCreationAsStatement
     public class ChromosomeTests
     {
-        [Test]
-        public void Constructor()
-        {
-            var functionSet = new HashSet<Func<IFunctionNode>>
+        private static readonly ISet<Func<IFunctionNode>> FunctionSet = new HashSet<Func<IFunctionNode>>
                                   {
                                       () => new SquareRootNode(),
                                       () => new AdditionNode(),
@@ -22,174 +19,139 @@
                                       () => new MultiplicationNode(),
                                       () => new DivisionNode()
                                   };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
+        private static readonly ISet<Func<ITerminalNode>> TerminalSet = new HashSet<Func<ITerminalNode>>
                                   {
                                       () => new ConstantNode(),
                                       () => new VariableNode()
                                   };
-            Assert.DoesNotThrow(() => new Chromosome(10, 1, functionSet, terminalSet));
+
+        [Test]
+        public void Constructor()
+        {
+            Assert.DoesNotThrow(() => new Chromosome(10, 1, FunctionSet, TerminalSet));
         }
 
         [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ConstructorNegativeHeadLength()
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
-            new Chromosome(-1, 1, functionSet, terminalSet);
+            new Chromosome(-1, 1, FunctionSet, TerminalSet);
         }
 
         [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ConstructorZeroNumGenes()
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
-            new Chromosome(10, 0, functionSet, terminalSet);
+            new Chromosome(10, 0, FunctionSet, TerminalSet);
+        }
+
+        [Test, ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructorNullFunctionSet()
+        {
+            new Chromosome(10, 1, null, TerminalSet, new List<IGepNode> { new ConstantNode() });
+        }
+
+        [Test, ExpectedException(typeof(ArgumentNullException))]
+        public void ConstructorNullTerminalSet()
+        {
+            new Chromosome(10, 1, FunctionSet, null, new List<IGepNode> { new ConstantNode() });
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorNullNodes()
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
-            new Chromosome(10, 1, functionSet, terminalSet, null);
+            new Chromosome(10, 1, FunctionSet, TerminalSet, null);
         }
 
         [Test]
         public void ConstructorNodes()
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var expected = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, 1, functionSet, terminalSet, expected);
+            var chromosome = new Chromosome(10, 1, FunctionSet, TerminalSet, expected);
             Assert.That(chromosome.Nodes, Is.EquivalentTo(expected));
         }
 
         [Test]
         public void GetFunctionSet()
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, 1, functionSet, terminalSet, nodes);
-            Assert.That(chromosome.FunctionSet, Is.EquivalentTo(functionSet));
+            var chromosome = new Chromosome(10, 1, FunctionSet, TerminalSet, nodes);
+            Assert.That(chromosome.FunctionSet, Is.EquivalentTo(FunctionSet));
         }
 
         [Test]
         public void GetTerminalSet()
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, 1, functionSet, terminalSet, nodes);
-            Assert.That(chromosome.TerminalSet, Is.EquivalentTo(terminalSet));
+            var chromosome = new Chromosome(10, 1, FunctionSet, TerminalSet, nodes);
+            Assert.That(chromosome.TerminalSet, Is.EquivalentTo(TerminalSet));
         }
 
         [Test]
         public void GetHeadLength([Random(5, 10, 5)]int headLength)
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(headLength, 1, functionSet, terminalSet, nodes);
+            var chromosome = new Chromosome(headLength, 1, FunctionSet, TerminalSet, nodes);
             Assert.That(chromosome.HeadLength, Is.EqualTo(headLength));
         }
 
         [Test]
         public void GetNumGenes([Random(5, 10, 5)]int numGenes)
         {
-            var functionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, numGenes, functionSet, terminalSet, nodes);
+            var chromosome = new Chromosome(10, numGenes, FunctionSet, TerminalSet, nodes);
             Assert.That(chromosome.NumGenes, Is.EqualTo(numGenes));
+        }
+
+        [Test]
+        public void GetTreeSingleTerminal([Random(0.0d, 1.0d, 5)]double value)
+        {
+            var expected = new ConstantNode { Value = value };
+            var nodes = new List<IGepNode> { expected };
+            var chromosome = new Chromosome(10, 1, FunctionSet, TerminalSet, nodes);
+            var actual = chromosome.Tree;
+
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetTree([Random(0.0d, 1.0d, 5)]double a, [Random(0.0d, 1.0d, 5)]double b)
+        {
+            var aNode = new ConstantNode { Value = a };
+            var bNode = new ConstantNode { Value = b };
+            var root = new AdditionNode();
+            var expected = new AdditionNode { Children = { aNode, bNode } };
+
+            var nodes = new List<IGepNode> { root, aNode, bNode };
+            var chromosome = new Chromosome(10, 1, FunctionSet, TerminalSet, nodes);
+            var actual = chromosome.Tree;
+
+            Assert.That(actual.Evaluate(), Is.EqualTo(expected.Evaluate()).Within(0.0001));
+        }
+
+        [Test]
+        public void GetTreeMultipleFunctions([Values(1.0, 2.0)]double a, [Values(1.0, 2.0)]double b, [Values(1.0, 2.0)]double c)
+        {
+            var aNode = new ConstantNode { Value = a };
+            var bNode = new ConstantNode { Value = b };
+            var cNode = new ConstantNode { Value = c };
+            var add = new AdditionNode();
+            var subtract = new SubtractionNode();
+            var expected = new AdditionNode
+                               {
+                                   Children =
+                                       {
+                                           new SubtractionNode
+                                               {
+                                                   Children = { bNode, cNode }
+                                               }, 
+                                           aNode
+                                       }
+                               };
+
+            var nodes = new List<IGepNode> { add, subtract, aNode, bNode, cNode };
+            var chromosome = new Chromosome(2, 1, FunctionSet, TerminalSet, nodes);
+            var actual = chromosome.Tree;
+
+            Assert.That(actual.Evaluate(), Is.EqualTo(expected.Evaluate()).Within(0.0001));
         }
     }
 }
