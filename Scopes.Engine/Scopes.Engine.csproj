@@ -83,6 +83,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Chromosome.cs" />
+    <Compile Include="Crossover\ICrossover.cs" />
+    <Compile Include="Crossover\NPointCrossover.cs" />
+    <Compile Include="Crossover\OnePointCrossover.cs" />
     <Compile Include="Factories\ChromosomeFactory.cs" />
     <Compile Include="Mutation\IMutation.cs" />
     <Compile Include="Mutation\SinglePointMutation.cs" />
