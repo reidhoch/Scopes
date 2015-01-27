@@ -68,6 +68,7 @@
     <Compile Include="Nodes\VariableNodeTests.cs" />
     <Compile Include="PopulationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selection\TournamentSelectionTests.cs" />
     <Compile Include="Termination\ElapsedTimeTerminationConditionTests.cs" />
   </ItemGroup>
   <ItemGroup>
