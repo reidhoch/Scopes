@@ -23,7 +23,8 @@
         {
             get
             {
-                throw new NotImplementedException();
+                Contract.Ensures(Contract.Result<int>() >= 0);
+                return default(int);
             }
             set
             {

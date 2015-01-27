@@ -61,13 +61,13 @@
 
         public IPopulation NextGeneration()
         {
-            var nextGeneration = new Population { ElitismRate = ElitismRate, Limit = Limit};
-            var list = this.chromosomes.OrderBy(val => val.Fitness).ToList();
+            var list = this.chromosomes.OrderByDescending(val => val.Fitness).ToArray();
             var boundary = (Int32)Math.Ceiling((1.0d - this.ElitismRate) * this.chromosomes.Count);
+            var next = new List<Chromosome>(this.Limit);
             for (var idx = boundary; idx < this.chromosomes.Count; idx++) {
-                nextGeneration.Add(list[idx]);
+                next.Add(list[idx]);
             }
-
+            var nextGeneration = new Population(next.OrderBy(val => val.Fitness)) { ElitismRate = this.ElitismRate, Limit = this.Limit };
             return nextGeneration;
         }
 
