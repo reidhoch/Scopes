@@ -36,6 +36,8 @@
             }
         }
 
+        public IList<Chromosome> Chromosomes { get { return this.chromosomes; } }
+
         public Population()
         {
             this.chromosomes = new List<Chromosome>();
@@ -73,7 +75,7 @@
         {
             if (chromosomes.Count >= this.Limit)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture,"Population of chromosomes has a count of{0}, the population limit is {1}", chromosomes.Count, this.Limit));
+                throw new InvalidOperationException(String.Format(CultureInfo.CurrentCulture,"Population of chromosomes has a count of {0}, the population limit is {1}", chromosomes.Count, this.Limit));
             }
             this.chromosomes.Add(chromosome);
         }

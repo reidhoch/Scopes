@@ -9,7 +9,7 @@
     {
         int Limit { get; set; }
         int Size { get; }
-
+        IList<Chromosome> Chromosomes { get; }
         IPopulation NextGeneration();
 
         void Add(Chromosome chromosome);
@@ -34,6 +34,16 @@
         public int Size
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public IList<Chromosome> Chromosomes
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IList<Chromosome>>() != null);
+                return default(IList<Chromosome>);
+            }
+            
         }
 
         public IPopulation NextGeneration()
