@@ -52,7 +52,7 @@
             this.Generate();
         }
 
-        public double Fitness { get; private set; }
+        public double Fitness { get; protected set; }
         public ISet<Func<IFunctionNode>> FunctionSet { get { return this.functionSet; } }
         public int HeadLength { get { return this.headLength; } }
         public int Length { get { return this.length; } }
