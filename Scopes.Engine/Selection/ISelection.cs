@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using System.Linq;
 
     [ContractClass(typeof(SelectionContract))]
     public interface ISelection
