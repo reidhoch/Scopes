@@ -1,12 +1,7 @@
 ﻿namespace Scopes.Engine.Tests.Selection
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-
     using NUnit.Framework;
 
-    using Scopes.Engine.Nodes;
     using Scopes.Engine.Selection;
 
     [TestFixture]
@@ -33,7 +28,7 @@
             var selection = new TournamentSelection();
             var population = new Population { Limit = 10 };
             for (var i = 0; i < 10; i++) {
-                population.Add(new Dummy());
+                population.Add(new DummyChromosome());
             }
 
             for (var i = 0; i < 10; i++)
@@ -44,31 +39,6 @@
                 // The least fit chromosome should never be selected.
                 Assert.That(first.Fitness < 9.0d);
                 Assert.That(second.Fitness < 9.0d);
-            }
-        }
-
-        internal class Dummy : Chromosome
-        {
-            private static readonly ISet<Func<IFunctionNode>> DummyFunctionSet = new HashSet<Func<IFunctionNode>>
-                                  {
-                                      () => new SquareRootNode(),
-                                      () => new AdditionNode(),
-                                      () => new SubtractionNode(),
-                                      () => new MultiplicationNode(),
-                                      () => new DivisionNode()
-                                  };
-            private static readonly ISet<Func<ITerminalNode>> DummyTerminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
-            private static int fitness;
-
-            internal Dummy()
-                : base(10, 1, DummyFunctionSet, DummyTerminalSet)
-            {
-                this.Fitness = fitness;
-                Interlocked.Increment(ref fitness);
             }
         }
     }

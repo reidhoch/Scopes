@@ -85,5 +85,24 @@
             pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
             pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
         }
+
+        [Test]
+        public void NextGeneration()
+        {
+            var pop = new Population { ElitismRate = .5, Limit = 20 };
+            for (var i = 0; i < 20; i++) {
+                pop.Add(new DummyChromosome());
+            }
+
+            var actual = pop.NextGeneration();
+            Assert.That(actual, Is.Not.Null);
+            Assert.That((actual as Population).ElitismRate, Is.EqualTo(0.5));
+            Assert.That(actual.Limit, Is.EqualTo(20));
+            Assert.That(actual.Chromosomes[0].Fitness, Is.EqualTo(0));
+            Assert.That(actual.Chromosomes[1].Fitness, Is.EqualTo(1));
+            Assert.That(actual.Chromosomes[2].Fitness, Is.EqualTo(2));
+            Assert.That(actual.Chromosomes[3].Fitness, Is.EqualTo(3));
+            Assert.That(actual.Chromosomes[4].Fitness, Is.EqualTo(4));
+        }
     }
 }
