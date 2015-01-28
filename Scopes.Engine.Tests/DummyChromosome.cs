@@ -16,15 +16,10 @@
                                       () => new MultiplicationNode(),
                                       () => new DivisionNode()
                                   };
-        private static readonly ISet<Func<ITerminalNode>> DummyTerminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
         private static int fitness;
 
         public DummyChromosome()
-            : base(10, 1, DummyFunctionSet, DummyTerminalSet)
+            : base(10, 1, DummyFunctionSet)
         {
             this.Fitness = fitness;
             Interlocked.Increment(ref fitness);

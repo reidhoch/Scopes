@@ -54,13 +54,8 @@
                                       () => new MultiplicationNode(),
                                       () => new DivisionNode()
                                   };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var pop = new Population { Limit = Int16.MaxValue };
-            pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
+            pop.Add(new Chromosome(10, 1, functionSet));
 
             Assert.That(pop.Size, Is.EqualTo(1));
         }
@@ -76,14 +71,9 @@
                                       () => new MultiplicationNode(),
                                       () => new DivisionNode()
                                   };
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-                                  {
-                                      () => new ConstantNode(),
-                                      () => new VariableNode()
-                                  };
             var pop = new Population { Limit = 1 };
-            pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
-            pop.Add(new Chromosome(10, 1, functionSet, terminalSet));
+            pop.Add(new Chromosome(10, 1, functionSet));
+            pop.Add(new Chromosome(10, 1, functionSet));
         }
 
         [Test]

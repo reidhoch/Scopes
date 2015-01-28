@@ -12,10 +12,9 @@
 
         public static ChromosomeFactory Instance { get { return Lazy.Value; } }
 
-        public IPopulation Generate(ISet<Func<IFunctionNode>> functionSet, ISet<Func<ITerminalNode>> terminalSet, int size, int headLength, int numGenes)
+        public IPopulation Generate(ISet<Func<IFunctionNode>> functionSet, int size, int headLength, int numGenes)
         {
             Contract.Requires(functionSet != null);
-            Contract.Requires(terminalSet != null);
             Contract.Requires(size >= 2);
             Contract.Requires(headLength > 0);
             Contract.Requires(numGenes >= 1);
@@ -23,7 +22,7 @@
 
             var chromosomes = new List<Chromosome>(size);
             for (var idx = 0; idx < size; idx++) {
-                chromosomes.Add(new Chromosome(headLength, numGenes, functionSet, terminalSet));
+                chromosomes.Add(new Chromosome(headLength, numGenes, functionSet));
             }
             return new Population(chromosomes);
         }

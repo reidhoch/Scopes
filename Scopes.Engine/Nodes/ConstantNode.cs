@@ -12,7 +12,7 @@
 
         public double Value { get; set; }
 
-        public double Evaluate()
+        public double Evaluate(double[] parameters)
         {
             return this.Value;
         }

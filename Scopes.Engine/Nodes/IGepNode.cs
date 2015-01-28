@@ -4,6 +4,6 @@
     {
         int Arity { get; }
 
-        double Evaluate();
+        double Evaluate(double[] parameters);
     }
 }

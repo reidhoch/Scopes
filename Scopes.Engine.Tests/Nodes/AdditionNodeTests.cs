@@ -30,7 +30,7 @@
             var right = new ConstantNode { Value = rightVal };
             var node = new AdditionNode { Children = { left, right } };
 
-            Assert.That(node.Evaluate(), Is.EqualTo(expected));
+            Assert.That(node.Evaluate(new double[0]), Is.EqualTo(expected));
         }
     }
 }

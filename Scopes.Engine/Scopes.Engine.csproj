@@ -87,6 +87,9 @@
     <Compile Include="Crossover\NPointCrossover.cs" />
     <Compile Include="Crossover\OnePointCrossover.cs" />
     <Compile Include="Factories\ChromosomeFactory.cs" />
+    <Compile Include="Factories\TerminalFactory.cs" />
+    <Compile Include="Fitness\FitnessEvaluator.cs" />
+    <Compile Include="Fitness\IFitnessEvaluator.cs" />
     <Compile Include="Mutation\IMutation.cs" />
     <Compile Include="Mutation\SinglePointMutation.cs" />
     <Compile Include="Nodes\AdditionNode.cs" />

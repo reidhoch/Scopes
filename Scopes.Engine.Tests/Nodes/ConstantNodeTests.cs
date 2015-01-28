@@ -27,7 +27,7 @@
         {
             var node = new ConstantNode { Value = value };
 
-            Assert.That(node.Evaluate(), Is.EqualTo(value));
+            Assert.That(node.Evaluate(new double[0]), Is.EqualTo(value));
         }
     }
 }

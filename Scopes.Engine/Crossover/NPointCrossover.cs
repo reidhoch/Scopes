@@ -27,7 +27,6 @@
             var headLength = father.HeadLength;
             var numGenes = father.NumGenes;
             var functionSet = father.FunctionSet;
-            var terminalSet = father.TerminalSet;
             var length = father.Length;
             var fatherNodes = father.Nodes;
             var motherNodes = mother.Nodes;
@@ -54,8 +53,8 @@
                 daughterNodes.Add(motherNodes[j]);
             }
 
-            var son = new Chromosome(headLength, numGenes, functionSet, terminalSet, sonNodes);
-            var daughter = new Chromosome(headLength, numGenes, functionSet, terminalSet, daughterNodes);
+            var son = new Chromosome(headLength, numGenes, functionSet, sonNodes);
+            var daughter = new Chromosome(headLength, numGenes, functionSet, daughterNodes);
             return new List<Chromosome> { son, daughter };
         }
     }

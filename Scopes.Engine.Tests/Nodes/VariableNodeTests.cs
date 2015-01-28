@@ -8,25 +8,26 @@
     public class VariableNodeTests
     {
         [Test]
-        public void Constructor([Random(1.0, 10.0, 5)]double value)
+        public void Constructor()
         {
-            Assert.DoesNotThrow(() => new VariableNode { Value = value });
+            Assert.DoesNotThrow(() => new VariableNode(0));
         }
 
         [Test]
-        public void GetArity([Values("A", "B", "C", "D", "E")]string name, [Random(1.0, 10.0, 5)]double value)
+        public void GetArity()
         {
-            var node = new VariableNode { Name = name, Value = value };
+            var node = new VariableNode(0);
 
             Assert.That(node.Arity, Is.EqualTo(0));
         }
 
         [Test]
-        public void Evaluate([Values("A", "B", "C", "D", "E")]string name, [Random(1.0, 10.0, 5)]double value)
+        public void Evaluate([Random(0.0, 10.0, 5)]double value)
         {
-            var node = new VariableNode { Name = name, Value = value };
+            var parameters = new[] { value };
+            var node = new VariableNode(0);
 
-            Assert.That(node.Evaluate(), Is.EqualTo(value));
+            Assert.That(node.Evaluate(parameters), Is.EqualTo(value));
         }
     }
 }

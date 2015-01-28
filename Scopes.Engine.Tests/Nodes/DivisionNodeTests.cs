@@ -32,7 +32,7 @@
             var right = new ConstantNode { Value = rightVal };
             var node = new DivisionNode { Children = { left, right } };
 
-            Assert.That(node.Evaluate(), Is.EqualTo(expected));
+            Assert.That(node.Evaluate(new double[0]), Is.EqualTo(expected));
         }
 
         [Test]
@@ -43,7 +43,7 @@
             var right = new ConstantNode { Value = 0.0d };
             var node = new DivisionNode { Children = { left, right } };
             
-            Assert.That(node.Evaluate(), Is.EqualTo(Expected));
+            Assert.That(node.Evaluate(new double[0]), Is.EqualTo(Expected));
         }
     }
 }

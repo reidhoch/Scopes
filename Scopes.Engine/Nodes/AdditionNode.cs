@@ -30,9 +30,9 @@
             }
         }
 
-        public double Evaluate()
+        public double Evaluate(double[] parameters)
         {
-            return this.Children[0].Evaluate() + this.Children[1].Evaluate();
+            return this.Children[0].Evaluate(parameters) + this.Children[1].Evaluate(parameters);
         }
     }
 }

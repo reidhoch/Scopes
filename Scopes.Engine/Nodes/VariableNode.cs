@@ -5,14 +5,18 @@
     [DebuggerDisplay("{Name}({Value})")]
     public class VariableNode : ITerminalNode
     {
+        private readonly int index;
+
+        public VariableNode(int index)
+        {
+            this.index = index;
+        }
+
         public int Arity { get { return 0; } }
 
-        public string Name { get; set; }
-        public double Value { get; set; }
-
-        public double Evaluate()
+        public double Evaluate(double[] parameters)
         {
-            return this.Value;
+            return parameters[index];
         }
     }
 }

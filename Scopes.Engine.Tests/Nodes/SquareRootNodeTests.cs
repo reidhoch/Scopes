@@ -24,7 +24,7 @@
             var child = new ConstantNode { Value = childVal };
             var node = new SquareRootNode { Children = { child } };
 
-            Assert.That(node.Evaluate(), Is.EqualTo(expected));
+            Assert.That(node.Evaluate(new double[0]), Is.EqualTo(expected));
         }
     }
 }

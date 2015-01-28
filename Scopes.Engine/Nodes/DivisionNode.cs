@@ -32,10 +32,10 @@
             }
         }
 
-        public double Evaluate()
+        public double Evaluate(double[] parameters)
         {
-            var num = this.Children[0].Evaluate();
-            var den = this.Children[1].Evaluate();
+            var num = this.Children[0].Evaluate(parameters);
+            var den = this.Children[1].Evaluate(parameters);
             if (Math.Abs(den) < Double.Epsilon)
             {
                 return Double.NaN;

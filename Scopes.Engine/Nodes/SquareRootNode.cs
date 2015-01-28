@@ -32,9 +32,9 @@
             }
         }
 
-        public double Evaluate()
+        public double Evaluate(double[] parameters)
         {
-            return Math.Sqrt(this.Children[0].Evaluate());
+            return Math.Sqrt(this.Children[0].Evaluate(parameters));
         }
     }
 }

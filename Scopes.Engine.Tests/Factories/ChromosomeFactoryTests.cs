@@ -23,13 +23,7 @@
             () => new MultiplicationNode(),
             () => new DivisionNode() 
         };
-
-            var terminalSet = new HashSet<Func<ITerminalNode>>
-        { 
-            () => new ConstantNode(),
-            () => new VariableNode()
-        };
-            var population = factory.Generate(functionSet, terminalSet, 500, 10, 1);
+            var population = factory.Generate(functionSet, 500, 10, 1);
             Assert.That(population.Size, Is.EqualTo(500));
         }
 
