@@ -58,6 +58,7 @@
     <Compile Include="ChromosomeTests.cs" />
     <Compile Include="Crossover\OnePointCrossoverTests.cs" />
     <Compile Include="DummyChromosome.cs" />
+    <Compile Include="EvolutionEngineTests.cs" />
     <Compile Include="Factories\ChromosomeFactoryTests.cs" />
     <Compile Include="Mutation\SinglePointMutationTests.cs" />
     <Compile Include="Nodes\AdditionNodeTests.cs" />

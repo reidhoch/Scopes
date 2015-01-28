@@ -24,7 +24,7 @@
             for (var idx = 0; idx < size; idx++) {
                 chromosomes.Add(new Chromosome(headLength, numGenes, functionSet));
             }
-            return new Population(chromosomes);
+            return new Population(chromosomes) { Limit = size };
         }
     }
 }

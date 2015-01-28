@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
 
-    [DebuggerDisplay("{Name}({Value})")]
+    [DebuggerDisplay("Var{index}")]
     public class VariableNode : ITerminalNode
     {
         private readonly int index;

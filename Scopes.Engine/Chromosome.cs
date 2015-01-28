@@ -67,12 +67,12 @@
                 if (isFunction) {
                     this.nodes.Add(FunctionSet.ElementAt(random.Next(0, setLength - 1))());
                 } else {
-                    this.nodes.Add(terminalFactory.Generate(5, 1, 10));
+                    this.nodes.Add(terminalFactory.Generate(2, 1, 10));
                 }
             }
             for (var i = this.headLength; i < this.length; i++) {
                 // Terminals only.
-                this.nodes.Add(terminalFactory.Generate(5, 1, 10));
+                this.nodes.Add(terminalFactory.Generate(2, 1, 10));
             }
         }
 
@@ -115,7 +115,7 @@
                 return FunctionSet.ElementAt(random.Next(0, setLength - 1))();
             }
             // Return a terminal node.
-            return terminalFactory.Generate(5, 1, 10);
+            return terminalFactory.Generate(2, 1, 10);
         }
     }
 }
