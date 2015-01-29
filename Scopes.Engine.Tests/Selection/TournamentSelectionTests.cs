@@ -28,7 +28,7 @@
             var selection = new TournamentSelection();
             var population = new Population { Limit = 10 };
             for (var i = 0; i < 10; i++) {
-                population.Add(new DummyChromosome());
+                population.Add(new DummyChromosome(i));
             }
 
             for (var i = 0; i < 10; i++)
@@ -37,8 +37,8 @@
                 var first = selected[0];
                 var second = selected[1];
                 // The least fit chromosome should never be selected.
-                Assert.That(first.Fitness < 9.0d);
-                Assert.That(second.Fitness < 9.0d);
+                Assert.That(first.Fitness < 9.0d, "Fitness = {0}", first.Fitness);
+                Assert.That(second.Fitness < 9.0d, "Fitness = {0}", second.Fitness);
             }
         }
     }

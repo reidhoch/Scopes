@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
 
     using Scopes.Engine.Nodes;
 
@@ -16,13 +15,11 @@
                                       () => new MultiplicationNode(),
                                       () => new DivisionNode()
                                   };
-        private static int fitness;
 
-        public DummyChromosome()
+        public DummyChromosome(int fitness)
             : base(10, 1, DummyFunctionSet)
         {
             this.Fitness = fitness;
-            Interlocked.Increment(ref fitness);
         }
     }
 }

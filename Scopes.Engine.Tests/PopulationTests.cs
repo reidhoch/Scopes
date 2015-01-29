@@ -81,7 +81,7 @@
         {
             var pop = new Population { ElitismRate = .5, Limit = 20 };
             for (var i = 0; i < 20; i++) {
-                pop.Add(new DummyChromosome());
+                pop.Add(new DummyChromosome(i));
             }
 
             var actual = pop.NextGeneration();
