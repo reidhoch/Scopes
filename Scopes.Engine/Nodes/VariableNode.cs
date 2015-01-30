@@ -1,6 +1,8 @@
 ﻿namespace Scopes.Engine.Nodes
 {
+    using System;
     using System.Diagnostics;
+    using System.Diagnostics.Contracts;
 
     [DebuggerDisplay("Var{index}")]
     public class VariableNode : ITerminalNode
@@ -9,10 +11,19 @@
 
         public VariableNode(int index)
         {
+            Contract.Requires<ArgumentOutOfRangeException>(index >= 0);
             this.index = index;
         }
 
-        public int Arity { get { return 0; } }
+        public int Arity
+        {
+            [Pure]
+            get
+            {
+                Contract.Ensures(Contract.Result<int>() == 0);
+                return 0;
+            }
+        }
 
         public double Evaluate(double[] parameters)
         {

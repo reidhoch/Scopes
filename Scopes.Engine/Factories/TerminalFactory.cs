@@ -1,6 +1,7 @@
 ﻿namespace Scopes.Engine.Factories
 {
     using System;
+    using System.Diagnostics.Contracts;
 
     using MathNet.Numerics.Random;
 
@@ -15,10 +16,12 @@
 
         public ITerminalNode Generate(int parameterCount, int min, int max)
         {
-            if (random.NextDouble() > 0.5d) {
+            Contract.Requires<ArgumentOutOfRangeException>(parameterCount >= 0);
+            Contract.Ensures(Contract.Result<ITerminalNode>() != null);
+//            if (random.NextDouble() > 0.5d) {
                 return new VariableNode(random.Next(parameterCount));
-            }
-            return new ConstantNode { Value = random.Next(min, max) };
+//            }
+//            return new ConstantNode { Value = random.Next(min, max) };
         }
     }
 }

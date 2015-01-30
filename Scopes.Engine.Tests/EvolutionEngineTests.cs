@@ -20,7 +20,6 @@
         {
             var functionSet = new HashSet<Func<IFunctionNode>>
                                   {
-                                      () => new SquareRootNode(),
                                       () => new AdditionNode(),
                                       () => new SubtractionNode(),
                                       () => new MultiplicationNode(),
@@ -40,11 +39,15 @@
                                  Mutation = new SinglePointMutation(),
                                  Selection = new TournamentSelection()
                              };
-            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 50, 10, 1);
+            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 100, 10, 1);
+            (initialPopulation as Population).ElitismRate = 0.05;
             var pop = engine.Evolve(
                 initialPopulation,
-                new ElapsedTimeTerminationCondition(TimeSpan.FromSeconds(30)),
+                new ElapsedTimeTerminationCondition(TimeSpan.FromSeconds(5)),
                 dataSet);
+            var best = pop.Chromosomes[0].Tree;
+            var answer = best.Evaluate(new[] { 6.0, 6.0 });
+            Assert.That(answer, Is.EqualTo(36.0));
         }
     }
 }

@@ -13,13 +13,13 @@
     public class Chromosome
     {
         private readonly MersenneTwister random = MersenneTwister.Default;
-
         private readonly TerminalFactory terminalFactory = TerminalFactory.Instance;
         private readonly IList<IGepNode> nodes;
         private readonly ISet<Func<IFunctionNode>> functionSet;
         private readonly int headLength;
         private readonly int length;
         private readonly int numGenes;
+        private double fitness = Double.MaxValue;
 ////        private readonly IGepNode[] genes;
 
         public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet, IEnumerable<IGepNode> nodes) :
@@ -50,7 +50,18 @@
             this.Generate();
         }
 
-        public double Fitness { get; set; }
+        public double Fitness
+        {
+            get
+            {
+                return this.fitness;
+            }
+            set
+            {
+                this.fitness = value;
+            }
+        }
+
         public ISet<Func<IFunctionNode>> FunctionSet { get { return this.functionSet; } }
         public int HeadLength { get { return this.headLength; } }
         public int Length { get { return this.length; } }
@@ -80,6 +91,7 @@
         {
             get
             {
+                Contract.Ensures(Contract.Result<IGepNode>() != null);
                 var functions = new Queue<IFunctionNode>();
                 var root = nodes[0];
                 if (0 == root.Arity) {

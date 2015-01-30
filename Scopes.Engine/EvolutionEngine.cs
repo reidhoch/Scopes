@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Diagnostics.Contracts;
 
     using MathNet.Numerics.Random;
 
@@ -31,13 +29,19 @@
 
         public IPopulation Evolve(IPopulation initial, ITerminationCondition terminationCondition, Dictionary<double[], double> dataSet)
         {
+            Contract.Requires<ArgumentNullException>(initial != null);
+            Contract.Requires<ArgumentNullException>(terminationCondition != null);
+            Contract.Requires<ArgumentNullException>(dataSet != null);
+            Contract.Ensures(Contract.Result<IPopulation>() != null);
             var current = initial;
             var f = new FitnessEvaluator(dataSet);
+            int gen = 0;
             while (!terminationCondition.IsSatisfied()) {
                 foreach (var c in current) {
                     c.Fitness = f.Calculate(c);
                 }
                 current = NextGeneration(current);
+                gen++;
             }
 
             return current;
@@ -45,6 +49,7 @@
 
         private IPopulation NextGeneration(IPopulation population)
         {
+            Contract.Requires<ArgumentNullException>(population != null);
             var nextGeneration = population.NextGeneration();
             while (nextGeneration.Size < nextGeneration.Limit)
             {
@@ -67,3 +72,4 @@
         }
     }
 }
+

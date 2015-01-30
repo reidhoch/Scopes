@@ -109,6 +109,38 @@
         }
 
         [Test]
+        public void Known()
+        {
+            //// +*/a-Qbb/*aabaabbabaa
+            var nodes = new List<IGepNode>
+                            {
+                                new AdditionNode(),
+                                new MultiplicationNode(),
+                                new DivisionNode(),
+                                new VariableNode(0),
+                                new SubtractionNode(),
+                                new SquareRootNode(),
+                                new VariableNode(1),
+                                new VariableNode(1),
+                                new DivisionNode(),
+                                new MultiplicationNode(), // End of Head
+                                new VariableNode(0),
+                                new VariableNode(0),
+                                new VariableNode(1),
+                                new VariableNode(0),
+                                new VariableNode(0),
+                                new VariableNode(1),
+                                new VariableNode(1),
+                                new VariableNode(0),
+                                new VariableNode(1),
+                                new VariableNode(0),
+                                new VariableNode(0),
+                            };
+            var chromosome = new Chromosome(10, 1, FunctionSet, nodes);
+            var actual = chromosome.Tree;
+        }
+
+        [Test]
         public void GetTreeMultipleFunctions([Values(1.0, 2.0)]double a, [Values(1.0, 2.0)]double b, [Values(1.0, 2.0)]double c)
         {
             var aNode = new ConstantNode { Value = a };

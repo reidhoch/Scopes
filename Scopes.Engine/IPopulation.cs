@@ -49,7 +49,8 @@
 
         public IPopulation NextGeneration()
         {
-            throw new NotImplementedException();
+            Contract.Ensures(Contract.Result<IPopulation>() != null);
+            return default(IPopulation);
         }
 
         public void Add(Chromosome chromosome)
