@@ -33,13 +33,15 @@
                                   { new[] { 4.0, 4.0 }, 16.0 },
                                   { new[] { 5.0, 5.0 }, 25.0 }
                               };
-            var engine = new EvolutionEngine(.7, .05)
+            var engine = new EvolutionEngine
                              {
+                                 CrossoverRate = 0.7,
                                  Crossover = new OnePointCrossover(),
+                                 MutationRate = .05,
                                  Mutation = new SinglePointMutation(),
                                  Selection = new TournamentSelection()
                              };
-            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 100, 10, 1);
+            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 4, 1);
             (initialPopulation as Population).ElitismRate = 0.05;
             var pop = engine.Evolve(
                 initialPopulation,

@@ -15,16 +15,36 @@
     public class EvolutionEngine
     {
         private readonly MersenneTwister random = MersenneTwister.Default;
-        private readonly double crossoverRate;
-        private readonly double mutationRate;
+        private double crossoverRate;
+        private double mutationRate;
         public ICrossover Crossover { get; set; }
         public IMutation Mutation { get; set; }
         public ISelection Selection { get; set; }
 
-        public EvolutionEngine(double crossoverRate, double mutationRate)
+        public double CrossoverRate
         {
-            this.crossoverRate = crossoverRate;
-            this.mutationRate = mutationRate;
+            get
+            {
+                return this.crossoverRate;
+            }
+            set
+            {
+                Contract.Requires<ArgumentOutOfRangeException>(value >= 0.0 && value <= 1.0);
+                this.crossoverRate = value;
+            }
+        }
+
+        public double MutationRate
+        {
+            get
+            {
+                return this.mutationRate;
+            }
+            set
+            {
+                Contract.Requires<ArgumentOutOfRangeException>(value >= 0.0 && value <= 1.0);
+                this.mutationRate = value;
+            }
         }
 
         public IPopulation Evolve(IPopulation initial, ITerminationCondition terminationCondition, Dictionary<double[], double> dataSet)
