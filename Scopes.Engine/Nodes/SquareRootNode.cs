@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     [DebuggerDisplay("√")]
     public class SquareRootNode : IFunctionNode
@@ -32,9 +33,36 @@
             }
         }
 
+        public IGepNode Clone()
+        {
+            return new SquareRootNode();
+        }
+
         public double Evaluate(double[] parameters)
         {
             return Math.Sqrt(this.Children[0].Evaluate(parameters));
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (null == obj) return false;
+
+            var other = obj as SquareRootNode;
+            if (null == other) return false;
+
+            return this.children.SequenceEqual(other.children);
+        }
+
+        public bool Equals(SquareRootNode obj)
+        {
+            if (null == obj) return false;
+
+            return this.children.SequenceEqual(obj.children);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.children != null ? this.children.GetHashCode() : 0;
         }
     }
 }

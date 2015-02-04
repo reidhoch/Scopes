@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     [DebuggerDisplay("+")]
     public class AdditionNode : IFunctionNode
     {
         private readonly IList<IGepNode> children;
+
         public AdditionNode()
         {
             this.children = new List<IGepNode>(this.Arity);
@@ -30,9 +32,36 @@
             }
         }
 
+        public IGepNode Clone()
+        {
+            return new AdditionNode();
+        }
+
         public double Evaluate(double[] parameters)
         {
             return this.Children[0].Evaluate(parameters) + this.Children[1].Evaluate(parameters);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (null == obj) return false;
+
+            var other = obj as AdditionNode;
+            if (null == other) return false;
+
+            return this.children.SequenceEqual(other.children);
+        }
+
+        public bool Equals(AdditionNode obj)
+        {
+            if (null == obj) return false;
+
+            return this.children.SequenceEqual(obj.children);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.children != null ? this.children.GetHashCode() : 0;
         }
     }
 }

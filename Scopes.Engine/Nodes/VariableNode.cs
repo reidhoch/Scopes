@@ -25,9 +25,36 @@
             }
         }
 
+        public IGepNode Clone()
+        {
+            return new VariableNode(this.index);
+        }
+
         public double Evaluate(double[] parameters)
         {
             return parameters[index];
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (null == obj) return false;
+
+            var other = obj as VariableNode;
+            if (null == other) return false;
+
+            return this.index == other.index;
+        }
+
+        public bool Equals(VariableNode obj)
+        {
+            if (null == obj) return false;
+
+            return this.index == obj.index;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.index.GetHashCode();
         }
     }
 }

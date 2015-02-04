@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
+    using System.Linq;
 
     [DebuggerDisplay("/")]
     public class DivisionNode : IFunctionNode
@@ -32,6 +33,11 @@
             }
         }
 
+        public IGepNode Clone()
+        {
+            return new DivisionNode();
+        }
+
         public double Evaluate(double[] parameters)
         {
             var num = this.Children[0].Evaluate(parameters);
@@ -41,6 +47,28 @@
                 return Double.NaN;
             }
             return num / den;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (null == obj) return false;
+
+            var other = obj as DivisionNode;
+            if (null == other) return false;
+
+            return this.children.SequenceEqual(other.children);
+        }
+
+        public bool Equals(DivisionNode obj)
+        {
+            if (null == obj) return false;
+
+            return this.children.SequenceEqual(obj.children);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.children != null ? this.children.GetHashCode() : 0;
         }
     }
 }
