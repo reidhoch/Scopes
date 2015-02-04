@@ -17,7 +17,8 @@
         {
             var nodes = original.Nodes;
             var functionSet = original.FunctionSet;
-            var newNodes = new List<IGepNode>(nodes);
+            var newNodes = new List<IGepNode>();
+            newNodes.AddRange(nodes.Select(node => node.Clone()));
             var index = random.Next(0, nodes.Count);
             if (index > original.HeadLength) {
                 // Terminal node only.
@@ -25,8 +26,7 @@
             } else {
                 // Function or Terminal node.  
                 var isFunction = this.random.NextDouble() > 0.5d;
-                if (isFunction)
-                {
+                if (isFunction) {
                     var setLength = functionSet.Count;
                     newNodes[index] = functionSet.ElementAt(random.Next(0, setLength - 1))();
                 } else {

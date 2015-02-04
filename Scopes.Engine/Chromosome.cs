@@ -29,7 +29,12 @@
             Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
             Contract.Requires<ArgumentNullException>(functionSet != null);
             Contract.Requires<ArgumentNullException>(nodes != null);
-            this.nodes = new List<IGepNode>(nodes);
+            var nodeArray = nodes.ToArray();
+            var count = nodeArray.Length;
+            this.nodes = new List<IGepNode>(count);
+            for (var i = 0; i < count; i++) {
+                this.nodes.Add(nodeArray[i].Clone());
+            }
         }
 
         public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet)
@@ -70,6 +75,8 @@
 
         public void Generate()
         {
+            Contract.Requires<ArgumentNullException>(this.FunctionSet != null);
+            Contract.Requires(this.FunctionSet.Count > 0);
             var setLength = FunctionSet.Count;
             this.nodes.Add(GenerateRoot()); // Give the root a large chance of being a non-terminal node.
             for (var i = 1; i < this.headLength; i++) {
@@ -93,14 +100,14 @@
             {
                 Contract.Ensures(Contract.Result<IGepNode>() != null);
                 var functions = new Queue<IFunctionNode>();
-                var root = nodes[0];
+                var root = nodes[0].Clone();
                 if (0 == root.Arity) {
                     return root;
                 }
 
                 functions.Enqueue(root as IFunctionNode);
                 for (var idx = 1; idx < this.length; idx++) {
-                    var node = nodes[idx];
+                    var node = nodes[idx].Clone();
                     if (0 != node.Arity) {
                         functions.Enqueue(node as IFunctionNode);
                     }
