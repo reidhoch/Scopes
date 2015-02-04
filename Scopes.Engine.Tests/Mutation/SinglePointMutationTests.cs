@@ -35,7 +35,7 @@
 
             var difference = 0;
             for (var idx = 0; idx < 5; idx++) {
-                if (mutant.Nodes[idx] != original.Nodes[idx]) {
+                if (!mutant.Nodes[idx].Equals(original.Nodes[idx])) {
                     difference++;
                 }
             }
