@@ -1,5 +1,6 @@
 ﻿namespace Scopes.Engine.Mutation
 {
+    using System;
     using System.Diagnostics.Contracts;
 
     [ContractClass(typeof(MutationContract))]
@@ -13,7 +14,7 @@
     {
         public Chromosome Mutate(Chromosome original)
         {
-            Contract.Requires(original != null);
+            Contract.Requires<ArgumentNullException>(original != null);
             Contract.Ensures(Contract.Result<Chromosome>() != null);
             return default(Chromosome);
         }

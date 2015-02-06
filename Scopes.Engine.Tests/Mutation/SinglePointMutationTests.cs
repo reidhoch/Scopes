@@ -30,7 +30,7 @@
             var subtract = new SubtractionNode();
             var mutation = new SinglePointMutation();
             var nodes = new List<IGepNode> { add, subtract, aNode, bNode, cNode };
-            var original = new Chromosome(2, 1, FunctionSet, nodes);
+            var original = new Chromosome(2, 1, 2, FunctionSet, nodes);
             var mutant = mutation.Mutate(original);
 
             var difference = 0;

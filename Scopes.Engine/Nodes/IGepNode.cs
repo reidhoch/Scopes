@@ -1,5 +1,6 @@
 ﻿namespace Scopes.Engine.Nodes
 {
+    using System;
     using System.Diagnostics.Contracts;
 
     [ContractClass(typeof(GepNodeContract))]
@@ -25,6 +26,7 @@
 
         public double Evaluate(double[] parameters)
         {
+            Contract.Requires<ArgumentNullException>(parameters != null);
             return 0.0;
         }
     }

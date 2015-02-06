@@ -16,13 +16,14 @@
         public Chromosome Mutate(Chromosome original)
         {
             var nodes = original.Nodes;
+            var parameterCount = original.ParameterCount;
             var functionSet = original.FunctionSet;
             var newNodes = new List<IGepNode>();
             newNodes.AddRange(nodes.Select(node => node.Clone()));
             var index = random.Next(0, nodes.Count);
-            if (index > original.HeadLength) {
+            if (index > (original.HeadLength - 1)) {
                 // Terminal node only.
-                newNodes[index] = terminalFactory.Generate(2, 1, 10);
+                newNodes[index] = terminalFactory.Generate(parameterCount, 1, 10);
             } else {
                 // Function or Terminal node.  
                 var isFunction = this.random.NextDouble() > 0.5d;
@@ -30,11 +31,11 @@
                     var setLength = functionSet.Count;
                     newNodes[index] = functionSet.ElementAt(random.Next(0, setLength - 1))();
                 } else {
-                    newNodes[index] = terminalFactory.Generate(2, 1, 10);
+                    newNodes[index] = terminalFactory.Generate(parameterCount, 1, 10);
                 }
             }
 
-            return new Chromosome(original.HeadLength, original.NumGenes, original.FunctionSet, newNodes);
+            return new Chromosome(original.HeadLength, original.NumGenes, original.ParameterCount, original.FunctionSet, newNodes);
         }
     }
 }

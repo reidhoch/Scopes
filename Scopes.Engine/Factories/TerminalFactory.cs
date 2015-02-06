@@ -16,7 +16,7 @@
 
         public ITerminalNode Generate(int parameterCount, int min, int max)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(parameterCount >= 0);
+            Contract.Requires<ArgumentOutOfRangeException>(parameterCount > 0);
             Contract.Ensures(Contract.Result<ITerminalNode>() != null);
 //            if (random.NextDouble() > 0.5d) {
                 return new VariableNode(random.Next(parameterCount));

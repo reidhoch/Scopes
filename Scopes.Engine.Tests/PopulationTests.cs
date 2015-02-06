@@ -55,7 +55,7 @@
                                       () => new DivisionNode()
                                   };
             var pop = new Population { Limit = Int16.MaxValue };
-            pop.Add(new Chromosome(10, 1, functionSet));
+            pop.Add(new Chromosome(10, 1, 2, functionSet));
 
             Assert.That(pop.Size, Is.EqualTo(1));
         }
@@ -72,8 +72,8 @@
                                       () => new DivisionNode()
                                   };
             var pop = new Population { Limit = 1 };
-            pop.Add(new Chromosome(10, 1, functionSet));
-            pop.Add(new Chromosome(10, 1, functionSet));
+            pop.Add(new Chromosome(10, 1, 2, functionSet));
+            pop.Add(new Chromosome(10, 1, 2, functionSet));
         }
 
         [Test]

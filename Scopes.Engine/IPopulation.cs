@@ -55,7 +55,7 @@
 
         public void Add(Chromosome chromosome)
         {
-            Contract.Requires(chromosome != null);
+            Contract.Requires<ArgumentNullException>(chromosome != null);
         }
 
         public IEnumerator<Chromosome> GetEnumerator()

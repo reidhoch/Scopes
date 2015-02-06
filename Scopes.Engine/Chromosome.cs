@@ -19,14 +19,16 @@
         private readonly int headLength;
         private readonly int length;
         private readonly int numGenes;
+        private readonly int parameterCount;
         private double fitness = Double.MaxValue;
 ////        private readonly IGepNode[] genes;
 
-        public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet, IEnumerable<IGepNode> nodes) :
-            this(headLength, numGenes, functionSet)
+        public Chromosome(int headLength, int numGenes, int parameterCount, ISet<Func<IFunctionNode>> functionSet, IEnumerable<IGepNode> nodes) :
+            this(headLength, numGenes, parameterCount, functionSet)
         {
             Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
             Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
+            Contract.Requires<ArgumentOutOfRangeException>(parameterCount >= 0);
             Contract.Requires<ArgumentNullException>(functionSet != null);
             Contract.Requires<ArgumentNullException>(nodes != null);
             var nodeArray = nodes.ToArray();
@@ -37,22 +39,24 @@
             }
         }
 
-        public Chromosome(int headLength, int numGenes, ISet<Func<IFunctionNode>> functionSet)
+        public Chromosome(int headLength, int numGenes, int parameterCount, ISet<Func<IFunctionNode>> functionSet)
         {
             Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
             Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
+            Contract.Requires<ArgumentOutOfRangeException>(parameterCount >= 0);
             Contract.Requires<ArgumentNullException>(functionSet != null);
 
             this.numGenes = numGenes;
 ////            this.genes = new IGepNode[this.numGenes];
             this.headLength = headLength;
+            this.parameterCount = parameterCount;
             // Learn maxArity from available nodes.
             var maxArity = functionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
             var tailLength = (this.headLength * (maxArity - 1)) + 1;
             this.length = this.headLength + tailLength;
             this.nodes = new List<IGepNode>(this.length);
             this.functionSet = functionSet;
-            this.Generate();
+//            this.Generate();
         }
 
         public double Fitness
@@ -68,6 +72,7 @@
         }
 
         public ISet<Func<IFunctionNode>> FunctionSet { get { return this.functionSet; } }
+        public int ParameterCount { get { return this.parameterCount; } }
         public int HeadLength { get { return this.headLength; } }
         public int Length { get { return this.length; } }
         public IList<IGepNode> Nodes { get { return this.nodes; } }
@@ -85,12 +90,12 @@
                 if (isFunction) {
                     this.nodes.Add(FunctionSet.ElementAt(random.Next(0, setLength - 1))());
                 } else {
-                    this.nodes.Add(terminalFactory.Generate(2, 1, 10));
+                    this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
                 }
             }
             for (var i = this.headLength; i < this.length; i++) {
                 // Terminals only.
-                this.nodes.Add(terminalFactory.Generate(2, 1, 10));
+                this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
             }
         }
 
@@ -134,7 +139,7 @@
                 return FunctionSet.ElementAt(random.Next(0, setLength - 1))();
             }
             // Return a terminal node.
-            return terminalFactory.Generate(2, 1, 10);
+            return terminalFactory.Generate(this.ParameterCount, 1, 10);
         }
     }
 }

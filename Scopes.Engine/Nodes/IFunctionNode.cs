@@ -17,7 +17,7 @@
         {
             get
             {
-                Contract.Ensures(Contract.Result<IList<IGepNode>>().Count <= 2);
+                Contract.Ensures(Contract.Result<IList<IGepNode>>().Count <= this.Arity);
                 return default(IList<IGepNode>);
             }
         }

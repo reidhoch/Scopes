@@ -17,7 +17,7 @@
                                   };
 
         public DummyChromosome(int fitness)
-            : base(10, 1, DummyFunctionSet)
+            : base(10, 1, 2, DummyFunctionSet)
         {
             this.Fitness = fitness;
         }

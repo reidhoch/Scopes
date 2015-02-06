@@ -41,7 +41,7 @@
                                  Mutation = new SinglePointMutation(),
                                  Selection = new TournamentSelection()
                              };
-            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 4, 1);
+            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 4, 1, 2);
             (initialPopulation as Population).ElitismRate = 0.05;
             var pop = engine.Evolve(
                 initialPopulation,

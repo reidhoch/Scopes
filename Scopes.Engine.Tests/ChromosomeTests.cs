@@ -23,38 +23,38 @@
         [Test]
         public void Constructor()
         {
-            Assert.DoesNotThrow(() => new Chromosome(10, 1, FunctionSet));
+            Assert.DoesNotThrow(() => new Chromosome(10, 1, 2, FunctionSet));
         }
 
         [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ConstructorNegativeHeadLength()
         {
-            new Chromosome(-1, 1, FunctionSet);
+            new Chromosome(-1, 1, 2, FunctionSet);
         }
 
         [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ConstructorZeroNumGenes()
         {
-            new Chromosome(10, 0, FunctionSet);
+            new Chromosome(10, 0, 2, FunctionSet);
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorNullFunctionSet()
         {
-            new Chromosome(10, 1, null, new List<IGepNode> { new ConstantNode() });
+            new Chromosome(10, 1, 2, null, new List<IGepNode> { new ConstantNode() });
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorNullNodes()
         {
-            new Chromosome(10, 1, FunctionSet, null);
+            new Chromosome(10, 1, 2, FunctionSet, null);
         }
 
         [Test]
         public void ConstructorNodes()
         {
             var expected = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, 1, FunctionSet, expected);
+            var chromosome = new Chromosome(10, 1, 2, FunctionSet, expected);
             Assert.That(chromosome.Nodes, Is.EquivalentTo(expected));
         }
 
@@ -62,7 +62,7 @@
         public void GetFunctionSet()
         {
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, 1, FunctionSet, nodes);
+            var chromosome = new Chromosome(10, 1, 2, FunctionSet, nodes);
             Assert.That(chromosome.FunctionSet, Is.EquivalentTo(FunctionSet));
         }
 
@@ -70,7 +70,7 @@
         public void GetHeadLength([Random(5, 10, 5)]int headLength)
         {
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(headLength, 1, FunctionSet, nodes);
+            var chromosome = new Chromosome(headLength, 1, 2, FunctionSet, nodes);
             Assert.That(chromosome.HeadLength, Is.EqualTo(headLength));
         }
 
@@ -78,7 +78,7 @@
         public void GetNumGenes([Random(5, 10, 5)]int numGenes)
         {
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(10, numGenes, FunctionSet, nodes);
+            var chromosome = new Chromosome(10, numGenes, 2, FunctionSet, nodes);
             Assert.That(chromosome.NumGenes, Is.EqualTo(numGenes));
         }
 
@@ -87,7 +87,7 @@
         {
             var expected = new ConstantNode { Value = value };
             var nodes = new List<IGepNode> { expected };
-            var chromosome = new Chromosome(10, 1, FunctionSet, nodes);
+            var chromosome = new Chromosome(10, 1, 2, FunctionSet, nodes);
             var actual = chromosome.Tree;
 
             Assert.That(actual, Is.EqualTo(expected));
@@ -102,42 +102,10 @@
             var expected = new AdditionNode { Children = { aNode, bNode } };
 
             var nodes = new List<IGepNode> { root, aNode, bNode };
-            var chromosome = new Chromosome(10, 1, FunctionSet, nodes);
+            var chromosome = new Chromosome(10, 1, 2, FunctionSet, nodes);
             var actual = chromosome.Tree;
 
             Assert.That(actual.Evaluate(new double[0]), Is.EqualTo(expected.Evaluate(new double[0])).Within(0.0001));
-        }
-
-        [Test]
-        public void Known()
-        {
-            //// +*/a-Qbb/*aabaabbabaa
-            var nodes = new List<IGepNode>
-                            {
-                                new AdditionNode(),
-                                new MultiplicationNode(),
-                                new DivisionNode(),
-                                new VariableNode(0),
-                                new SubtractionNode(),
-                                new SquareRootNode(),
-                                new VariableNode(1),
-                                new VariableNode(1),
-                                new DivisionNode(),
-                                new MultiplicationNode(), // End of Head
-                                new VariableNode(0),
-                                new VariableNode(0),
-                                new VariableNode(1),
-                                new VariableNode(0),
-                                new VariableNode(0),
-                                new VariableNode(1),
-                                new VariableNode(1),
-                                new VariableNode(0),
-                                new VariableNode(1),
-                                new VariableNode(0),
-                                new VariableNode(0),
-                            };
-            var chromosome = new Chromosome(10, 1, FunctionSet, nodes);
-            var actual = chromosome.Tree;
         }
 
         [Test]
@@ -161,7 +129,7 @@
                                };
 
             var nodes = new List<IGepNode> { add, subtract, aNode, bNode, cNode };
-            var chromosome = new Chromosome(2, 1, FunctionSet, nodes);
+            var chromosome = new Chromosome(2, 1, 2, FunctionSet, nodes);
             var actual = chromosome.Tree;
 
             Assert.That(actual.Evaluate(new double[0]), Is.EqualTo(expected.Evaluate(new double[0])).Within(0.0001));

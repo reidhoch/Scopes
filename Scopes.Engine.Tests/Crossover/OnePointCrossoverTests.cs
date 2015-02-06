@@ -28,8 +28,8 @@
 
             var fNodes = new List<IGepNode> { add, subtract, add, subtract, subtract, add, subtract, add, add };
             var mNodes = new List<IGepNode> { subtract, add, add, subtract, add, subtract, add, add, add };
-            var father = new Chromosome(4, 1, FunctionSet, fNodes);
-            var mother = new Chromosome(4, 1, FunctionSet, mNodes);
+            var father = new Chromosome(4, 1, 2, FunctionSet, fNodes);
+            var mother = new Chromosome(4, 1, 2, FunctionSet, mNodes);
             var crossover = new OnePointCrossover();
             for (var i = 0; i < 20; i++) {
                 var result = crossover.Crossover(father, mother);
