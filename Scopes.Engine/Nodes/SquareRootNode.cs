@@ -62,7 +62,7 @@
 
         public override int GetHashCode()
         {
-            return this.children != null ? this.children.GetHashCode() : 0;
+            return this.children.GetHashCode();
         }
     }
 }
