@@ -42,8 +42,7 @@
         {
             var num = this.Children[0].Evaluate(parameters);
             var den = this.Children[1].Evaluate(parameters);
-            if (Math.Abs(den) < Double.Epsilon)
-            {
+            if (Math.Abs(den) < Double.Epsilon) {
                 return Double.NaN;
             }
             return num / den;
@@ -68,7 +67,7 @@
 
         public override int GetHashCode()
         {
-            return this.children != null ? this.children.GetHashCode() : 0;
+            return this.children.GetHashCode();
         }
     }
 }
