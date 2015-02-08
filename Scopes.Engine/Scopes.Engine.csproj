@@ -109,6 +109,7 @@
     <Compile Include="Selection\ISelection.cs" />
     <Compile Include="Selection\TournamentSelection.cs" />
     <Compile Include="Termination\ElapsedTimeTerminationCondition.cs" />
+    <Compile Include="Termination\FixedGenerationCountTerminationCondition.cs" />
     <Compile Include="Termination\ITerminationCondition.cs" />
   </ItemGroup>
   <ItemGroup>
