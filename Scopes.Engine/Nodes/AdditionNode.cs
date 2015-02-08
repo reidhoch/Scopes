@@ -67,5 +67,11 @@
         {
             return this.children.GetHashCode();
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.children != null);
+        }
     }
 }
