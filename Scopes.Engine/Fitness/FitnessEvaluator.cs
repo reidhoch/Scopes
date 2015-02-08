@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
 
     public class FitnessEvaluator : IFitnessEvaluator
     {
@@ -10,6 +11,7 @@
 
         public FitnessEvaluator(Dictionary<double[], double> dataSet)
         {
+            Contract.Requires<ArgumentNullException>(dataSet != null);
             this.dataSet = dataSet;
         }
 

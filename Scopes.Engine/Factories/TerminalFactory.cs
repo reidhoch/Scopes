@@ -23,5 +23,11 @@
 //            }
 //            return new ConstantNode { Value = random.Next(min, max) };
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.random != null);
+        }
     }
 }

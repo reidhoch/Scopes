@@ -1,12 +1,13 @@
 ﻿namespace Scopes.Engine.Nodes
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq;
 
     [DebuggerDisplay("+")]
-    public class AdditionNode : IFunctionNode
+    public class AdditionNode : IFunctionNode, IEquatable<AdditionNode>
     {
         private readonly IList<IGepNode> children;
 
@@ -26,6 +27,7 @@
 
         public int Arity
         {
+            [Pure]
             get
             {
                 return 2;
@@ -44,6 +46,7 @@
 
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             var other = obj as AdditionNode;
@@ -54,6 +57,7 @@
 
         public bool Equals(AdditionNode obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             return this.children.SequenceEqual(obj.children);

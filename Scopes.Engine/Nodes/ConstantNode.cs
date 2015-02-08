@@ -7,7 +7,7 @@
     using MathNet.Numerics;
 
     [DebuggerDisplay("{Value}")]
-    public class ConstantNode : ITerminalNode
+    public class ConstantNode : ITerminalNode, IEquatable<ConstantNode>
     {
         public int Arity
         {
@@ -33,6 +33,7 @@
 
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             var other = obj as ConstantNode;
@@ -43,6 +44,7 @@
 
         public bool Equals(ConstantNode obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             return this.Value.AlmostEqual(obj.Value, Precision.DoublePrecision);

@@ -7,7 +7,7 @@
     using System.Linq;
 
     [DebuggerDisplay("/")]
-    public class DivisionNode : IFunctionNode
+    public class DivisionNode : IFunctionNode, IEquatable<DivisionNode>
     {
         private readonly IList<IGepNode> children;
 
@@ -50,6 +50,7 @@
 
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             var other = obj as DivisionNode;
@@ -60,6 +61,7 @@
 
         public bool Equals(DivisionNode obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             return this.children.SequenceEqual(obj.children);

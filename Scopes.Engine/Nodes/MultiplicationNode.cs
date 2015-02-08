@@ -1,12 +1,13 @@
 ﻿namespace Scopes.Engine.Nodes
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Diagnostics.Contracts;
     using System.Linq;
 
     [DebuggerDisplay("*")]
-    public class MultiplicationNode : IFunctionNode
+    public class MultiplicationNode : IFunctionNode, IEquatable<MultiplicationNode>
     {
         private readonly IList<IGepNode> children;
 
@@ -44,6 +45,7 @@
 
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             var other = obj as MultiplicationNode;
@@ -54,6 +56,7 @@
 
         public bool Equals(MultiplicationNode obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             return this.children.SequenceEqual(obj.children);

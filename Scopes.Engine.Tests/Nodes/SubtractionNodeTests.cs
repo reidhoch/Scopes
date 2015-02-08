@@ -37,6 +37,34 @@
         }
 
         [Test]
+        public void SameReference([Random(5)]double left, [Random(5)]double right)
+        {
+            var node = new SubtractionNode
+            {
+                Children =
+                                   {
+                                       new ConstantNode { Value = left },
+                                       new ConstantNode { Value = right }
+                                   }
+            };
+            Assert.That(node.Equals(node), Is.True);
+        }
+
+        [Test]
+        public void ObjectSameReference([Random(5)]double left, [Random(5)]double right)
+        {
+            var node = new SubtractionNode
+            {
+                Children =
+                                   {
+                                       new ConstantNode { Value = left },
+                                       new ConstantNode { Value = right }
+                                   }
+            };
+            Assert.That(node.Equals(node as object), Is.True);
+        }
+
+        [Test]
         public void Equals([Random(5)]double leftVal, [Random(5)]double rightVal)
         {
             var left = new SubtractionNode

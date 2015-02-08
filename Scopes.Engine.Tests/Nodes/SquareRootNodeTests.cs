@@ -24,6 +24,21 @@
             Assert.That(node.Clone(), Is.Not.Null);
         }
 
+
+        [Test]
+        public void SameReference([Values(1.0, 4.0, 9.0, 16.0, 25.0)] double childVal)
+        {
+            var node = new SquareRootNode { Children = { new ConstantNode { Value = childVal } } };
+            Assert.That(node.Equals(node), Is.True);
+        }
+
+        [Test]
+        public void ObjectSameReference([Values(1.0, 4.0, 9.0, 16.0, 25.0)] double childVal)
+        {
+            var node = new SquareRootNode { Children = { new ConstantNode { Value = childVal } } };
+            Assert.That(node.Equals(node as object), Is.True);
+        }
+
         [Test]
         public void Equals([Values(1.0, 4.0, 9.0, 16.0, 25.0)] double childVal)
         {

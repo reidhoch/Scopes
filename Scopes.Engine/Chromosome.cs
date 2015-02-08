@@ -71,16 +71,29 @@
             }
         }
 
-        public ISet<Func<IFunctionNode>> FunctionSet { get { return this.functionSet; } }
+        public ISet<Func<IFunctionNode>> FunctionSet
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<ISet<Func<IFunctionNode>>>() != null);
+                return this.functionSet;
+            }
+        }
         public int ParameterCount { get { return this.parameterCount; } }
         public int HeadLength { get { return this.headLength; } }
         public int Length { get { return this.length; } }
-        public IList<IGepNode> Nodes { get { return this.nodes; } }
+        public IList<IGepNode> Nodes
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IList<IGepNode>>() != null);
+                return this.nodes;
+            }
+        }
         public int NumGenes { get { return this.numGenes; } }
 
         public void Generate()
         {
-            Contract.Requires<ArgumentNullException>(this.FunctionSet != null);
             Contract.Requires(this.FunctionSet.Count > 0);
             var setLength = FunctionSet.Count;
             this.nodes.Add(GenerateRoot()); // Give the root a large chance of being a non-terminal node.

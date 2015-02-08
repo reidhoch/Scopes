@@ -18,6 +18,7 @@
             Contract.Requires(size >= 2);
             Contract.Requires(headLength > 0);
             Contract.Requires(numGenes >= 1);
+            Contract.Requires(parameterCount >= 0);
             Contract.Ensures(Contract.Result<IPopulation>() != null);
 
             var chromosomes = new List<Chromosome>(size);

@@ -30,6 +30,20 @@
         }
 
         [Test]
+        public void SameReference([Random(1.0, 10.0, 5)]double value)
+        {
+            var node = new ConstantNode { Value = value };
+            Assert.That(node.Equals(node), Is.True);
+        }
+
+        [Test]
+        public void ObjectSameReference([Random(1.0, 10.0, 5)]double value)
+        {
+            var node = new ConstantNode { Value = value };
+            Assert.That(node.Equals(node as object), Is.True);
+        }
+
+        [Test]
         public void Equals([Random(1.0, 10.0, 5)]double value)
         {
             var left = new ConstantNode { Value = value };

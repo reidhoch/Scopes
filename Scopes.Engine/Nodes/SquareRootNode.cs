@@ -7,7 +7,7 @@
     using System.Linq;
 
     [DebuggerDisplay("√")]
-    public class SquareRootNode : IFunctionNode
+    public class SquareRootNode : IFunctionNode, IEquatable<SquareRootNode>
     {
         private readonly IList<IGepNode> children;
 
@@ -45,6 +45,7 @@
 
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             var other = obj as SquareRootNode;
@@ -55,6 +56,7 @@
 
         public bool Equals(SquareRootNode obj)
         {
+            if (ReferenceEquals(this, obj)) return true;
             if (null == obj) return false;
 
             return this.children.SequenceEqual(obj.children);

@@ -29,6 +29,20 @@
         }
 
         [Test]
+        public void SameReference([Random(1, 10, 5)]int value)
+        {
+            var node = new VariableNode(value);
+            Assert.That(node.Equals(node), Is.True);
+        }
+
+        [Test]
+        public void ObjectSameReference([Random(1, 10, 5)]int value)
+        {
+            var node = new VariableNode(value);
+            Assert.That(node.Equals(node as object), Is.True);
+        }
+
+        [Test]
         public void Equals([Random(1, 10, 5)]int value)
         {
             var left = new VariableNode(value);
