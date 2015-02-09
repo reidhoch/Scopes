@@ -55,13 +55,11 @@
             Contract.Ensures(Contract.Result<IPopulation>() != null);
             var current = initial;
             var f = new FitnessEvaluator(dataSet);
-            int gen = 0;
             while (!terminationCondition.IsSatisfied()) {
                 foreach (var c in current) {
                     c.Fitness = f.Calculate(c);
                 }
                 current = NextGeneration(current);
-                gen++;
             }
 
             return current;
@@ -70,6 +68,7 @@
         private IPopulation NextGeneration(IPopulation population)
         {
             Contract.Requires<ArgumentNullException>(population != null);
+            Contract.Ensures(Contract.Result<IPopulation>() != null);
             var nextGeneration = population.NextGeneration();
             while (nextGeneration.Size < nextGeneration.Limit)
             {

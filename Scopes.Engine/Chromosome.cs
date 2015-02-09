@@ -154,5 +154,13 @@
             // Return a terminal node.
             return terminalFactory.Generate(this.ParameterCount, 1, 10);
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.functionSet != null);
+            Contract.Invariant(this.nodes != null);
+            Contract.Invariant(this.random != null);
+        }
     }
 }

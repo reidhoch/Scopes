@@ -45,7 +45,7 @@
             (initialPopulation as Population).ElitismRate = 0.05;
             var pop = engine.Evolve(
                 initialPopulation,
-                new ElapsedTimeTerminationCondition(TimeSpan.FromSeconds(5)),
+                new FixedGenerationCountTerminationCondition(500),
                 dataSet);
             var best = pop.Chromosomes[0].Tree;
             var answer = best.Evaluate(new[] { 6.0, 6.0 });

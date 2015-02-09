@@ -79,5 +79,11 @@
             }
             this.chromosomes.Add(chromosome);
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.chromosomes != null);
+        }
     }
 }
