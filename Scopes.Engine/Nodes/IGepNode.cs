@@ -16,7 +16,7 @@
     [ContractClassFor(typeof(IGepNode))]
     internal abstract class GepNodeContract : IGepNode
     {
-        public int Arity { get; private set; }
+        public int Arity { get { return default(int); } }
 
         public IGepNode Clone()
         {

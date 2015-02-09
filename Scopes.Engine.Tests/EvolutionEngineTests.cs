@@ -5,7 +5,6 @@
 
     using NUnit.Framework;
 
-    using Scopes.Engine.Crossover;
     using Scopes.Engine.Factories;
     using Scopes.Engine.Mutation;
     using Scopes.Engine.Nodes;

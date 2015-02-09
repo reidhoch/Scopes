@@ -69,6 +69,7 @@
         }
 
         [ContractInvariantMethod]
+        // ReSharper disable once UnusedMember.Local
         private void ObjectInvariant()
         {
             Contract.Invariant(this.children != null);

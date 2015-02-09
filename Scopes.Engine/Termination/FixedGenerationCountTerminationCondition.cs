@@ -7,7 +7,7 @@
     public class FixedGenerationCountTerminationCondition : ITerminationCondition
     {
         private readonly int numGenerations;
-        private int generation = 0;
+        private int generation;
 
         public FixedGenerationCountTerminationCondition(int numGenerations)
         {

@@ -1,6 +1,5 @@
 ﻿namespace Scopes.Engine.Nodes
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
@@ -22,7 +21,7 @@
             }
         }
 
-        public int Arity { get; private set; }
+        public int Arity { get { return default(int); } }
 
         public IGepNode Clone()
         {
