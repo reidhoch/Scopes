@@ -26,11 +26,16 @@
                                   };
             var dataSet = new Dictionary<double[], double>
                               {
-                                  { new[] { 1.0, 1.0 }, 1.0 },
-                                  { new[] { 2.0, 2.0 }, 4.0 },
-                                  { new[] { 3.0, 3.0 }, 9.0 },
-                                  { new[] { 4.0, 4.0 }, 16.0 },
-                                  { new[] { 5.0, 5.0 }, 25.0 }
+                                  { new[] { 6.9408 }, 44.90975 },
+                                  { new[] { -7.8664 }, 7.340925 },
+                                  { new[] { -2.7861 }, -4.47712 },
+                                  { new[] { -5.0944 }, -2.30674 },
+                                  { new[] { 9.4895 }, 73.49381 },
+                                  { new[] { -9.6197 }, 17.41021 },
+                                  { new[] { -9.4145 }, 16.07291 },
+                                  { new[] { -0.1432 }, -0.41935 },
+                                  { new[] { 0.9107 }, 3.146787 },
+                                  { new[] { 2.1762 }, 8.896523 }
                               };
             var engine = new EvolutionEngine
                              {
@@ -38,17 +43,18 @@
                                  TwoPointCrossoverRate = 0.2,
                                  MutationRate = .044,
                                  Mutation = new SinglePointMutation(),
+                                 TranspositionRate = 0.1,
                                  Selection = new TournamentSelection()
                              };
-            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 4, 1, 2);
+            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 7, 1, 1);
             (initialPopulation as Population).ElitismRate = 0.05;
             var pop = engine.Evolve(
                 initialPopulation,
                 new FixedGenerationCountTerminationCondition(500),
                 dataSet);
             var best = pop.Chromosomes[0].Tree;
-            var answer = best.Evaluate(new[] { 6.0, 6.0 });
-            Assert.That(answer, Is.EqualTo(36.0));
+            var answer = best.Evaluate(new[] { 2.1762 });
+            Assert.That(answer, Is.EqualTo(8.896523));
         }
     }
 }
