@@ -15,22 +15,37 @@
     public class EvolutionEngine
     {
         private readonly MersenneTwister random = MersenneTwister.Default;
-        private double crossoverRate;
+        private readonly ICrossover onePointCrossover = new OnePointCrossover();
+        private readonly ICrossover twoPointCrossover = new TwoPointCrossover();
+        private double onePointCrossoverRate;
+        private double twoPointCrossoverRate;
         private double mutationRate;
-        public ICrossover Crossover { get; set; }
         public IMutation Mutation { get; set; }
         public ISelection Selection { get; set; }
 
-        public double CrossoverRate
+        public double OnePointCrossoverRate
         {
             get
             {
-                return this.crossoverRate;
+                return this.onePointCrossoverRate;
             }
             set
             {
                 Contract.Requires<ArgumentOutOfRangeException>(value >= 0.0 && value <= 1.0);
-                this.crossoverRate = value;
+                this.onePointCrossoverRate = value;
+            }
+        }
+
+        public double TwoPointCrossoverRate
+        {
+            get
+            {
+                return this.twoPointCrossoverRate;
+            }
+            set
+            {
+                Contract.Requires<ArgumentOutOfRangeException>(value >= 0.0 && value <= 1.0);
+                this.twoPointCrossoverRate = value;
             }
         }
 
@@ -74,8 +89,12 @@
             {
                 var pair = Selection.Select(population);
 
-                if (random.NextDouble() < this.crossoverRate) {
-                    pair = Crossover.Crossover(pair[0], pair[1]);
+                if (random.NextDouble() < this.OnePointCrossoverRate) {
+                    pair = this.onePointCrossover.Crossover(pair[0], pair[1]);
+                }
+                if (random.NextDouble() < this.TwoPointCrossoverRate)
+                {
+                    pair = this.twoPointCrossover.Crossover(pair[0], pair[1]);
                 }
 
                 if (random.NextDouble() < this.mutationRate) {

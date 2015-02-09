@@ -35,9 +35,9 @@
                               };
             var engine = new EvolutionEngine
                              {
-                                 CrossoverRate = 0.7,
-                                 Crossover = new OnePointCrossover(),
-                                 MutationRate = .05,
+                                 OnePointCrossoverRate = 0.4,
+                                 TwoPointCrossoverRate = 0.2,
+                                 MutationRate = .044,
                                  Mutation = new SinglePointMutation(),
                                  Selection = new TournamentSelection()
                              };
