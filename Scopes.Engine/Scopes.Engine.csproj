@@ -93,6 +93,7 @@
     <Compile Include="Fitness\FitnessEvaluator.cs" />
     <Compile Include="Fitness\IFitnessEvaluator.cs" />
     <Compile Include="Mutation\IMutation.cs" />
+    <Compile Include="Mutation\RootTransposition.cs" />
     <Compile Include="Mutation\SinglePointMutation.cs" />
     <Compile Include="Mutation\Transposition.cs" />
     <Compile Include="Nodes\AdditionNode.cs" />
