@@ -1,6 +1,7 @@
 ﻿namespace Scopes.Engine.Mutation
 {
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     using MathNet.Numerics.Random;
@@ -36,6 +37,12 @@
             }
 
             return new Chromosome(original.HeadLength, original.NumGenes, original.ParameterCount, original.FunctionSet, newNodes);
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.random != null);
         }
     }
 }

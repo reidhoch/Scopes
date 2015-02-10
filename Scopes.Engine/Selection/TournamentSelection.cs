@@ -49,5 +49,12 @@
             var results = tournament.OrderBy(chromosome => chromosome.Fitness).ToArray();
             return results[0];
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.tournamentSize > 1);
+            Contract.Invariant(this.random != null);
+        }
     }
 }

@@ -25,12 +25,19 @@
                 var expected = kvp.Value;
                 var actual = root.Evaluate(parameters);
                 if (Double.IsNaN(actual)) {
-                    chromosome.Fitness = Double.MaxValue;
-                    continue;
+                    return Double.MaxValue;
+                    //                    chromosome.Fitness = Double.MaxValue;
+                    //                    continue;
                 }
-                error += Math.Abs(expected - actual);
+                error += Math.Abs(actual - expected);
             }
             return error;
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.dataSet != null);
         }
     }
 }

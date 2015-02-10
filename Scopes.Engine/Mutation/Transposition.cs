@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     using MathNet.Numerics.Random;
@@ -37,6 +38,12 @@
                 newNodes[i] = transposon[j];
             }
             return new Chromosome(headLength, numGenes, parameterCount, functionSet, newNodes);
+        }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.random != null);
         }
     }
 }

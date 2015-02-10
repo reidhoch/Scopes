@@ -58,5 +58,12 @@
             var daughter = new Chromosome(headLength, numGenes, parameterCount, functionSet, daughterNodes);
             return new List<Chromosome> { son, daughter };
         }
+
+        [ContractInvariantMethod]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(this.crossoverPoints > 0);
+            Contract.Invariant(this.random != null);
+        }
     }
 }
