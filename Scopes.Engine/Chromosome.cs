@@ -21,7 +21,8 @@
         private readonly int numGenes;
         private readonly int parameterCount;
         private double fitness = Double.MaxValue;
-////        private readonly IGepNode[] genes;
+        private readonly IGepNode[] genes;
+        private IGepNode linkingFunction;
 
         public Chromosome(int headLength, int numGenes, int parameterCount, ISet<Func<IFunctionNode>> functionSet, IEnumerable<IGepNode> nodes) :
             this(headLength, numGenes, parameterCount, functionSet)
@@ -47,16 +48,15 @@
             Contract.Requires<ArgumentNullException>(functionSet != null);
 
             this.numGenes = numGenes;
-////            this.genes = new IGepNode[this.numGenes];
+            this.genes = new IGepNode[this.numGenes];
             this.headLength = headLength;
             this.parameterCount = parameterCount;
             // Learn maxArity from available nodes.
             var maxArity = functionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
             var tailLength = (this.headLength * (maxArity - 1)) + 1;
-            this.length = this.headLength + tailLength;
+            this.length = this.numGenes * (this.headLength + tailLength);
             this.nodes = new List<IGepNode>(this.length);
             this.functionSet = functionSet;
-//            this.Generate();
         }
 
         public double Fitness
@@ -79,6 +79,22 @@
                 return this.functionSet;
             }
         }
+
+        public IGepNode LinkingFunction
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IGepNode>() != null);
+                return this.linkingFunction.Clone();
+            }
+            set
+            {
+                Contract.Requires<ArgumentNullException>(value != null);
+                Contract.Requires<ArgumentException>(value.Arity == 2, "Arity must be 2.");
+                this.linkingFunction = value;
+            }
+        }
+
         public int ParameterCount { get { return this.parameterCount; } }
         public int HeadLength { get { return this.headLength; } }
         public int Length { get { return this.length; } }
@@ -96,19 +112,21 @@
         {
             Contract.Requires(this.FunctionSet.Count > 0);
             var setLength = FunctionSet.Count;
-            this.nodes.Add(GenerateRoot()); // Give the root a large chance of being a non-terminal node.
-            for (var i = 1; i < this.headLength; i++) {
-                // Functions and terminals.
-                var isFunction = random.NextDouble() < 0.5d;
-                if (isFunction) {
-                    this.nodes.Add(FunctionSet.ElementAt(random.Next(0, setLength - 1))());
-                } else {
+            for (var j = 0; j < this.numGenes; j++) {
+                this.nodes.Add(GenerateRoot()); // Give the root a large chance of being a non-terminal node.
+                for (var i = 1; i < this.headLength; i++) {
+                    // Functions and terminals.
+                    var isFunction = random.NextDouble() < 0.5d;
+                    if (isFunction) {
+                        this.nodes.Add(FunctionSet.ElementAt(random.Next(0, setLength - 1))());
+                    } else {
+                        this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
+                    }
+                }
+                for (var i = this.headLength; i < this.length; i++) {
+                    // Terminals only.
                     this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
                 }
-            }
-            for (var i = this.headLength; i < this.length; i++) {
-                // Terminals only.
-                this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
             }
         }
 

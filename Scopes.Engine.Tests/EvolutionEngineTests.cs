@@ -40,21 +40,22 @@
             var engine = new EvolutionEngine
                              {
                                  OnePointCrossoverRate = 0.4,
-                                 TwoPointCrossoverRate = 0.2,
                                  MutationRate = .044,
                                  Mutation = new SinglePointMutation(),
+                                 RootTranspositionRate = 0.1,
+                                 Selection = new TournamentSelection(),
                                  TranspositionRate = 0.1,
-                                 Selection = new TournamentSelection()
+                                 TwoPointCrossoverRate = 0.2
                              };
-            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 7, 1, 1);
-            (initialPopulation as Population).ElitismRate = 0.05;
+            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 7, 3, 1);
+            (initialPopulation as Population).ElitismRate = 0.25;
             var pop = engine.Evolve(
                 initialPopulation,
                 new FixedGenerationCountTerminationCondition(500),
                 dataSet);
             var best = pop.Chromosomes[0].Tree;
             var answer = best.Evaluate(new[] { 2.1762 });
-            Assert.That(answer, Is.EqualTo(8.896523));
+            Assert.That(answer, Is.EqualTo(8.896523).Within(0.01));
         }
     }
 }
