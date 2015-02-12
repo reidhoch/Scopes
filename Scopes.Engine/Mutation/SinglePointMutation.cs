@@ -45,6 +45,7 @@
         private void ObjectInvariant()
         {
             Contract.Invariant(this.random != null);
+            Contract.Invariant(this.terminalFactory != null);
         }
     }
 }
