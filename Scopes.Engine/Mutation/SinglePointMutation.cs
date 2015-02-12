@@ -19,6 +19,7 @@
             var nodes = original.Nodes;
             var parameterCount = original.ParameterCount;
             var functionSet = original.FunctionSet;
+            var linkingFunction = original.LinkingFunction;
             var newNodes = new List<IGepNode>();
             newNodes.AddRange(nodes.Select(node => node.Clone()));
             var index = random.Next(0, nodes.Count);
@@ -36,10 +37,11 @@
                 }
             }
 
-            return new Chromosome(original.HeadLength, original.NumGenes, original.ParameterCount, original.FunctionSet, newNodes);
+            return new Chromosome(original.HeadLength, original.NumGenes, original.ParameterCount, original.FunctionSet, newNodes) { LinkingFunction = linkingFunction };
         }
 
         [ContractInvariantMethod]
+        // ReSharper disable once UnusedMember.Local
         private void ObjectInvariant()
         {
             Contract.Invariant(this.random != null);

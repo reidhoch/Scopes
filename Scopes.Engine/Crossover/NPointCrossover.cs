@@ -28,6 +28,7 @@
             var numGenes = father.NumGenes;
             var parameterCount = father.ParameterCount;
             var functionSet = father.FunctionSet;
+            var linkingFunction = father.LinkingFunction;
             var length = father.Length;
             var fatherNodes = father.Nodes;
             var motherNodes = mother.Nodes;
@@ -54,12 +55,13 @@
                 daughterNodes.Add(motherNodes[j]);
             }
 
-            var son = new Chromosome(headLength, numGenes, parameterCount, functionSet, sonNodes);
-            var daughter = new Chromosome(headLength, numGenes, parameterCount, functionSet, daughterNodes);
+            var son = new Chromosome(headLength, numGenes, parameterCount, functionSet, sonNodes) { LinkingFunction = linkingFunction };
+            var daughter = new Chromosome(headLength, numGenes, parameterCount, functionSet, daughterNodes) { LinkingFunction = linkingFunction };
             return new List<Chromosome> { son, daughter };
         }
 
         [ContractInvariantMethod]
+        // ReSharper disable once UnusedMember.Local
         private void ObjectInvariant()
         {
             Contract.Invariant(this.crossoverPoints > 0);

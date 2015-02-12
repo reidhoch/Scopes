@@ -86,8 +86,8 @@
         public void GetTreeSingleTerminal([Random(0.0d, 1.0d, 5)]double value)
         {
             var expected = new ConstantNode { Value = value };
-            var nodes = new List<IGepNode> { expected };
-            var chromosome = new Chromosome(10, 1, 2, FunctionSet, nodes);
+            var nodes = new List<IGepNode> { expected, expected, expected };
+            var chromosome = new Chromosome(1, 1, 2, FunctionSet, nodes);
             var actual = chromosome.Tree;
 
             Assert.That(actual, Is.EqualTo(expected));
@@ -102,10 +102,61 @@
             var expected = new AdditionNode { Children = { aNode, bNode } };
 
             var nodes = new List<IGepNode> { root, aNode, bNode };
-            var chromosome = new Chromosome(10, 1, 2, FunctionSet, nodes);
+            var chromosome = new Chromosome(1, 1, 2, FunctionSet, nodes);
             var actual = chromosome.Tree;
 
             Assert.That(actual.Evaluate(new double[0]), Is.EqualTo(expected.Evaluate(new double[0])).Within(0.0001));
+        }
+
+        [Test]
+        public void GetTreeMultigenicChromosome([Random(-10, 10, 5)] int a, [Random(-10, 10, 5)] int b)
+        {
+            var parameters = new double[] { a, b };
+            // *Q-b/abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+            var multigenicNodes = new IGepNode[]
+                                      {
+                                          new MultiplicationNode(),     // *Q-b/abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new SquareRootNode(),         // Q-b/abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new SubtractionNode(),        // -b/abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // b/abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new DivisionNode(),           // /abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // abbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // bbbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // bbaaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // baaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // aaba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // aba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // ba/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // a/aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new DivisionNode(),           // /aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // aQb-bbbaabaa*Q-/b*abbbbaa
+                                          new SquareRootNode(),         // Qb-bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // b-bbbaabaa*Q-/b*abbbbaa
+                                          new SubtractionNode(),        // -bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // bbbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // bbaabaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // baabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // aabaa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // abaa*Q-/b*abbbbaa
+                                          new VariableNode(1),          // baa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // aa*Q-/b*abbbbaa
+                                          new VariableNode(0),          // a*Q-/b*abbbbaa
+                                          new MultiplicationNode(),     // *Q-/b*abbbbaa
+                                          new SquareRootNode(),         // Q-/b*abbbbaa
+                                          new SubtractionNode(),        // -/b*abbbbaa
+                                          new DivisionNode(),           // /b*abbbbaa
+                                          new VariableNode(1),          // b*abbbbaa
+                                          new MultiplicationNode(),     // *abbbbaa
+                                          new VariableNode(0),          // abbbbaa
+                                          new VariableNode(1),          // bbbbaa
+                                          new VariableNode(1),          // bbbaa
+                                          new VariableNode(1),          // bbaa
+                                          new VariableNode(1),          // baa
+                                          new VariableNode(0),          // aa
+                                          new VariableNode(0),          // a
+                                      };
+            var chromosome = new Chromosome(6, 3, 2, FunctionSet, multigenicNodes) { LinkingFunction = new AdditionNode() };
+            var tree = chromosome.Tree;
         }
 
         [Test]

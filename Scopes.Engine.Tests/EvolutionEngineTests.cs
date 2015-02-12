@@ -14,7 +14,7 @@
     [TestFixture]
     public class EvolutionEngineTests
     {
-        [Test]
+        [Test, Ignore]
         public void Test()
         {
             var functionSet = new HashSet<Func<IFunctionNode>>
@@ -47,7 +47,7 @@
                                  TranspositionRate = 0.1,
                                  TwoPointCrossoverRate = 0.2
                              };
-            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 7, 3, 1);
+            var initialPopulation = ChromosomeFactory.Instance.Generate(functionSet, 20, 7, 3, 1, new AdditionNode());
             (initialPopulation as Population).ElitismRate = 0.25;
             var pop = engine.Evolve(
                 initialPopulation,

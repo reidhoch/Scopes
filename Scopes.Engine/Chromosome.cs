@@ -14,21 +14,21 @@
     {
         private readonly MersenneTwister random = MersenneTwister.Default;
         private readonly TerminalFactory terminalFactory = TerminalFactory.Instance;
-        private readonly IList<IGepNode> nodes;
+        private readonly List<IGepNode> nodes;
         private readonly ISet<Func<IFunctionNode>> functionSet;
         private readonly int headLength;
+        private readonly int tailLength;
         private readonly int length;
         private readonly int numGenes;
         private readonly int parameterCount;
         private double fitness = Double.MaxValue;
-        private readonly IGepNode[] genes;
         private IGepNode linkingFunction;
 
         public Chromosome(int headLength, int numGenes, int parameterCount, ISet<Func<IFunctionNode>> functionSet, IEnumerable<IGepNode> nodes) :
             this(headLength, numGenes, parameterCount, functionSet)
         {
             Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
-            Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
+            Contract.Requires<ArgumentOutOfRangeException>(numGenes > 0);
             Contract.Requires<ArgumentOutOfRangeException>(parameterCount >= 0);
             Contract.Requires<ArgumentNullException>(functionSet != null);
             Contract.Requires<ArgumentNullException>(nodes != null);
@@ -43,17 +43,16 @@
         public Chromosome(int headLength, int numGenes, int parameterCount, ISet<Func<IFunctionNode>> functionSet)
         {
             Contract.Requires<ArgumentOutOfRangeException>(headLength > 0);
-            Contract.Requires<ArgumentOutOfRangeException>(numGenes >= 1);
+            Contract.Requires<ArgumentOutOfRangeException>(numGenes > 0);
             Contract.Requires<ArgumentOutOfRangeException>(parameterCount >= 0);
             Contract.Requires<ArgumentNullException>(functionSet != null);
 
             this.numGenes = numGenes;
-            this.genes = new IGepNode[this.numGenes];
             this.headLength = headLength;
             this.parameterCount = parameterCount;
             // Learn maxArity from available nodes.
             var maxArity = functionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
-            var tailLength = (this.headLength * (maxArity - 1)) + 1;
+            this.tailLength = (this.headLength * (maxArity - 1)) + 1;
             this.length = this.numGenes * (this.headLength + tailLength);
             this.nodes = new List<IGepNode>(this.length);
             this.functionSet = functionSet;
@@ -98,6 +97,7 @@
         public int ParameterCount { get { return this.parameterCount; } }
         public int HeadLength { get { return this.headLength; } }
         public int Length { get { return this.length; } }
+        public int TailLength { get { return this.tailLength; } }
         public IList<IGepNode> Nodes
         {
             get
@@ -135,15 +135,21 @@
             get
             {
                 Contract.Ensures(Contract.Result<IGepNode>() != null);
-                var functions = new Queue<IFunctionNode>();
-                var root = nodes[0].Clone();
-                if (0 == root.Arity) {
-                    return root;
+                var subtrees = new List<IGepNode>(this.numGenes);
+                var geneLen = headLength + tailLength;
+                for (var i = 0; i < numGenes; i++) {
+                    subtrees.Add(ExpressTree(nodes.GetRange(i * geneLen, geneLen)));
                 }
-
+                var tree = new List<IGepNode>();
+                for (var j = 0; j < this.numGenes - 1; j++) {
+                    tree.Add(LinkingFunction.Clone());
+                }
+                tree.AddRange(subtrees);
+                var functions = new Queue<IFunctionNode>();
+                var root = tree[0];
                 functions.Enqueue(root as IFunctionNode);
-                for (var idx = 1; idx < this.length; idx++) {
-                    var node = nodes[idx].Clone();
+                for (var idx = 1; idx < tree.Count; idx++) {
+                    var node = tree[idx];
                     if (0 != node.Arity) {
                         functions.Enqueue(node as IFunctionNode);
                     }
@@ -157,9 +163,38 @@
                         break;
                     }
                 }
-
                 return root;
             }
+        }
+
+        private static IGepNode ExpressTree(IReadOnlyList<IGepNode> subnodes)
+        {
+            Contract.Requires<ArgumentNullException>(subnodes != null);
+            Contract.Ensures(Contract.Result<IGepNode>() != null);
+            var functions = new Queue<IFunctionNode>();
+            var root = subnodes[0].Clone();
+            if (0 == root.Arity) {
+                return root;
+            }
+
+            functions.Enqueue(root as IFunctionNode);
+            for (var idx = 1; idx < subnodes.Count; idx++) {
+                var node = subnodes[idx].Clone();
+                if (0 != node.Arity) {
+                    functions.Enqueue(node as IFunctionNode);
+                }
+                var parent = functions.Peek();
+                parent.Children.Add(node);
+                if (parent.Children.Count != parent.Arity) {
+                    continue;
+                }
+                functions.Dequeue();
+                if (functions.Count == 0) {
+                    break;
+                }
+            }
+
+            return root;
         }
 
         private IGepNode GenerateRoot()
@@ -180,6 +215,7 @@
             Contract.Invariant(this.functionSet != null);
             Contract.Invariant(this.nodes != null);
             Contract.Invariant(this.random != null);
+            Contract.Invariant(this.numGenes > 0);
         }
     }
 }

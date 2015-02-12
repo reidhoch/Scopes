@@ -23,7 +23,7 @@
             () => new MultiplicationNode(),
             () => new DivisionNode() 
         };
-            var population = factory.Generate(functionSet, 500, 10, 1, 2);
+            var population = factory.Generate(functionSet, 500, 10, 1, 2, new AdditionNode());
             Assert.That(population.Size, Is.EqualTo(500));
         }
 

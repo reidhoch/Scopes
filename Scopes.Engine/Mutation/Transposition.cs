@@ -22,6 +22,7 @@
             var numGenes = original.NumGenes;
             var parameterCount = original.ParameterCount;
             var functionSet = original.FunctionSet;
+            var linkingFunction = original.LinkingFunction;
             var sourcePoint = this.random.Next(original.Length);
             var sourceLen = original.Length - sourcePoint;
             var targetPoint = this.random.Next(1, headLength - 1);
@@ -37,10 +38,11 @@
             for (int i = targetPoint, j = 0; j < transposonLen; i++, j++) {
                 newNodes[i] = transposon[j];
             }
-            return new Chromosome(headLength, numGenes, parameterCount, functionSet, newNodes);
+            return new Chromosome(headLength, numGenes, parameterCount, functionSet, newNodes) { LinkingFunction = linkingFunction };
         }
 
         [ContractInvariantMethod]
+        // ReSharper disable once UnusedMember.Local
         private void ObjectInvariant()
         {
             Contract.Invariant(this.random != null);

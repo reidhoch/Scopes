@@ -12,7 +12,7 @@
 
         public static ChromosomeFactory Instance { get { return Lazy.Value; } }
 
-        public IPopulation Generate(ISet<Func<IFunctionNode>> functionSet, int size, int headLength, int numGenes, int parameterCount)
+        public IPopulation Generate(ISet<Func<IFunctionNode>> functionSet, int size, int headLength, int numGenes, int parameterCount, IGepNode linkingFunction)
         {
             Contract.Requires(functionSet != null);
             Contract.Requires(size >= 2);
@@ -22,8 +22,9 @@
             Contract.Ensures(Contract.Result<IPopulation>() != null);
 
             var chromosomes = new List<Chromosome>(size);
-            for (var idx = 0; idx < size; idx++) {
-                var chromosome = new Chromosome(headLength, numGenes, parameterCount, functionSet);
+            for (var idx = 0; idx < size; idx++)
+            {
+                var chromosome = new Chromosome(headLength, numGenes, parameterCount, functionSet) { LinkingFunction = linkingFunction.Clone() };
                 chromosome.Generate();
                 chromosomes.Add(chromosome);
             }
