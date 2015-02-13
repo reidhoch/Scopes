@@ -123,7 +123,7 @@
                         this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
                     }
                 }
-                for (var i = this.headLength; i < this.length; i++) {
+                for (var i = this.headLength; i < this.headLength + this.tailLength; i++) {
                     // Terminals only.
                     this.nodes.Add(terminalFactory.Generate(this.ParameterCount, 1, 10));
                 }
