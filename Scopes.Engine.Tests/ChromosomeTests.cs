@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using NUnit.Framework;
 
@@ -72,6 +73,24 @@
             var nodes = new List<IGepNode> { new ConstantNode() };
             var chromosome = new Chromosome(headLength, 1, 2, FunctionSet, nodes);
             Assert.That(chromosome.HeadLength, Is.EqualTo(headLength));
+        }
+
+        [Test]
+        public void GetTailLength([Random(5, 10, 5)]int headLength)
+        {
+            var nodes = new List<IGepNode> { new ConstantNode() };
+            var chromosome = new Chromosome(headLength, 1, 2, FunctionSet, nodes);
+            var maxArity = FunctionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
+            Assert.That(chromosome.TailLength, Is.EqualTo((headLength * (maxArity - 1)) + 1));
+        }
+
+        [Test]
+        public void GetLength([Random(5, 10, 5)]int headLength)
+        {
+            var nodes = new List<IGepNode> { new ConstantNode() };
+            var chromosome = new Chromosome(headLength, 1, 2, FunctionSet, nodes);
+            var maxArity = FunctionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
+            Assert.That(chromosome.Length, Is.EqualTo(headLength + (headLength * (maxArity - 1)) + 1));
         }
 
         [Test]
