@@ -85,12 +85,12 @@
         }
 
         [Test]
-        public void GetLength([Random(5, 10, 5)]int headLength)
+        public void GetLength([Random(5, 10, 5)]int headLength, [Random(1, 5, 3)]int numGenes)
         {
             var nodes = new List<IGepNode> { new ConstantNode() };
-            var chromosome = new Chromosome(headLength, 1, 2, FunctionSet, nodes);
+            var chromosome = new Chromosome(headLength, numGenes, 2, FunctionSet, nodes);
             var maxArity = FunctionSet.Select(func => func().Arity).Concat(new[] { Int32.MinValue }).Max();
-            Assert.That(chromosome.Length, Is.EqualTo(headLength + (headLength * (maxArity - 1)) + 1));
+            Assert.That(chromosome.Length, Is.EqualTo(numGenes * (headLength + (headLength * (maxArity - 1)) + 1)));
         }
 
         [Test]
